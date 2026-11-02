@@ -1,0 +1,24 @@
+npm error code 1
+npm error path /home/hatch/workspace/prisma-7-to-8-migration-lab/app/node_modules/@prisma/engines
+npm error command failed
+npm error command sh -c node scripts/postinstall.js
+npm error node:internal/process/promises:394
+npm error     triggerUncaughtException(err, true /* fromPromise */);
+npm error     ^
+npm error
+npm error Error: aborted
+npm error     at TLSSocket.socketCloseListener (node:_http_client:734:19)
+npm error     at TLSSocket.emit (node:events:526:24)
+npm error     at node:net:362:12
+npm error     at Socket.done (node:internal/tls/wrap:780:7)
+npm error     at Socket.wrapper (node:events:639:12)
+npm error     at Socket.emit (node:events:526:24)
+npm error     at TCP.<anonymous> (node:net:362:12) {
+npm error   code: 'ECONNRESET',
+npm error   attemptNumber: 1,
+npm error   retriesLeft: 2
+npm error }
+npm error
+npm error Node.js v24.22.1
+npm error A complete log of this run can be found in: /home/hatch/.npm/_logs/2026-10-25T20_00_12_680Z-debug-0.log
+EXIT=1

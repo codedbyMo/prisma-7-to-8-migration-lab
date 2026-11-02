@@ -1,0 +1,143 @@
+=== GATE: emit full contract, migration plan, db migrate, db verify; pairing CLI 8.0.0-rc.29-dev.177 / lib 8.0.0-rc.22-dev.1, 2026-11-01T14:25:52Z ===
+--- npx prisma contract emit ---
+▸ Resolving contract source...
+✔ Resolving contract source...
+▸ Emitting contract...
+✔ Emitting contract...
+│  contract:  generated/prisma8/contract.json
+│  types:     generated/prisma8/contract.d.ts
+
+✔ Emitted contract.json and contract.d.ts
+
+storageHash:    75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f
+executionHash:  6bb269978fc138298b895912c9dce6dd1852abbcb705b17eaf49ec62c2543061
+profileHash:    3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2
+generated/prisma8/contract.json
+generated/prisma8/contract.d.ts
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.22-dev.1, synced none). Run: prisma skills sync
+emit exit: 0
+--- npx prisma migration plan --name gate_recheck ---
+│  contract:    generated/prisma8/contract.json
+│  migrations:  migrations/app
+│  name:        gate_recheck
+
+⚠ The default origin ref 'db' points at e2b10078c8f762c7544b5ee625263cb0a291e127e8a70f90b78af01582d9d2d6, which already has a migration leading to 75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f. Planning from it forks the migration graph; pass --from to choose the origin explicitly.
+✔ Planned 1 operation(s)
+
+migrations/app/20261101T1425_gate_recheck
+└─ Add column "subtitle" to "Post"
+
+from:       e2b10078c8f762c7544b5ee625263cb0a291e127e8a70f90b78af01582d9d2d6
+to:         75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f
+app space:  migrations/app/20261101T1425_gate_recheck
+
+ℹ DDL preview
+
+ALTER TABLE "public"."Post" ADD COLUMN "subtitle" character varying(255);
+
+→ Review migrations/app/20261101T1425_gate_recheck
+→ Apply the migration: prisma db migrate
+migrations/app/20261101T1425_gate_recheck
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.22-dev.1, synced none). Run: prisma skills sync
+plan exit: 0
+--- npx prisma db migrate --advance-ref db ---
+▸ Running migration plan across spaces
+✔ Running migration plan across spaces
+│  migrations:  migrations
+│  database:    postgresql://****:****@127.0.0.1:54399/lab
+
+✔ Applied 1 migration(s) (1 operation(s)) across 1 contract space(s)
+
+App space
+├─ Add column "subtitle" to "Post"
+└─ marker 75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f
+
+✔ Advanced ref "db" → 75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f
+→ Check every space against the database: prisma migration status
+app	20261101T1324_add_post_subtitle	e2b10078c8f762c7544b5ee625263cb0a291e127e8a70f90b78af01582d9d2d6	75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f	1
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.22-dev.1, synced none). Run: prisma skills sync
+migrate exit: 0
+--- npx prisma migration status ---
+│  migrations:  migrations
+│  database:    postgresql://****:****@127.0.0.1:54399/lab
+
+○   75e7b46  @contract @db (db)
+│
+│↑  20261101T1324_add_post_subtitle  e2b1007 → 75e7b46  1 ops  ✓ applied
+│↑  20261101T1425_gate_recheck       e2b1007 → 75e7b46  1 ops
+○   e2b1007
+│↑  20261101T1323_baseline                 ∅ → e2b1007  7 ops
+○   ∅
+
+✔ Up to date
+app	20261101T1425_gate_recheck	e2b10078c8f762c7544b5ee625263cb0a291e127e8a70f90b78af01582d9d2d6	75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f	1	
+app	20261101T1324_add_post_subtitle	e2b10078c8f762c7544b5ee625263cb0a291e127e8a70f90b78af01582d9d2d6	75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f	1	applied
+app	20261101T1323_baseline		e2b10078c8f762c7544b5ee625263cb0a291e127e8a70f90b78af01582d9d2d6	7	
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.22-dev.1, synced none). Run: prisma skills sync
+status exit: 0
+--- npx prisma db verify ---
+▸ Connecting to database...
+✔ Connecting to database...
+▸ Verifying database marker...
+✔ Verifying database marker...
+▸ Introspecting database schema
+✔ Introspecting database schema
+▸ Verifying contract spaces
+✔ Verifying contract spaces
+│  contract:  generated/prisma8/contract.json
+│  mode:      full (marker + schema, tolerant)
+│  database:  postgresql://****:****@127.0.0.1:54399/lab
+
+✔ Database marker and schema match contract
+
+storageHash:  75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f
+profileHash:  3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.22-dev.1, synced none). Run: prisma skills sync
+verify exit: 0
+--- npx prisma db verify --strict ---
+▸ Connecting to database...
+✔ Connecting to database...
+▸ Verifying database marker...
+✔ Verifying database marker...
+▸ Introspecting database schema
+✔ Introspecting database schema
+▸ Verifying contract spaces
+✔ Verifying contract spaces
+│  contract:  generated/prisma8/contract.json
+│  mode:      full (marker + schema, strict)
+│  database:  postgresql://****:****@127.0.0.1:54399/lab
+
+✔ Database marker and schema match contract
+
+storageHash:  75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f
+profileHash:  3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.22-dev.1, synced none). Run: prisma skills sync
+verify-strict exit: 0
+--- integrity (after) ---
+LABEL after
+postCount 3
+tagCount 3
+joinCount 4
+tagIds ["cmvxx9y4y0000pyzsj4t8bwht","cmvxx9y5m0001pyzskopp3mxb","cmvxx9y5o0002pyzslp9bfzg3"]
+joinPairs [["580635f5-0438-4164-8dc0-b6056ce634e5","cmvxx9y5m0001pyzskopp3mxb"],["580635f5-0438-4164-8dc0-b6056ce634e5","cmvxx9y5o0002pyzslp9bfzg3"],["6824e4f4-fb3f-437a-a303-04ed5ddee2c8","cmvxx9y4y0000pyzsj4t8bwht"],["6824e4f4-fb3f-437a-a303-04ed5ddee2c8","cmvxx9y5m0001pyzskopp3mxb"]]
+sha256 2ecc7b8806e33cf64d295ad4cb5c7dfa61f4c2d255475ddca153657450c2995f
+COLUMNS
+  Post.id uuid
+  Post.title varchar
+  Post.price numeric
+  Post.metadata jsonb
+  Post.createdAt timestamp
+  Post.updatedAt timestamp
+  Post.subtitle varchar
+  Tag.id text
+  Tag.label varchar
+  _PostToTag.A uuid
+  _PostToTag.B text
+  _prisma_migrations.id varchar
+  _prisma_migrations.checksum varchar
+  _prisma_migrations.finished_at timestamptz
+  _prisma_migrations.migration_name varchar
+  _prisma_migrations.logs text
+  _prisma_migrations.rolled_back_at timestamptz
+  _prisma_migrations.started_at timestamptz
+  _prisma_migrations.applied_steps_count int4

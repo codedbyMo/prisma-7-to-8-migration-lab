@@ -1,0 +1,155 @@
+▸ Resolving contract source...
+✔ Resolving contract source...
+▸ Emitting contract...
+✔ Emitting contract...
+│  contract:  generated/prisma8/contract.json
+│  types:     generated/prisma8/contract.d.ts
+
+✔ Emitted contract.json and contract.d.ts
+
+storageHash:    75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f
+executionHash:  e376679117bb54432365155aa940ee2280e4bb34b31684dd5ee8962db30e6a30
+profileHash:    3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2
+generated/prisma8/contract.json
+generated/prisma8/contract.d.ts
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.20, synced none). Run: prisma skills sync
+│  contract:    generated/prisma8/contract.json
+│  migrations:  migrations/app
+│  name:        add_post_subtitle
+
+✔ Planned baseline (7 operation(s)) + 1 operation(s)
+
+migrations/app/20261101T1323_baseline
+├─ Create schema "public"
+├─ Create table "Post"
+├─ Create table "Tag"
+├─ Create table "_PostToTag"
+├─ Create index "_PostToTag_B_index" on "_PostToTag"
+├─ Add foreign key "_PostToTag_A_fkey" on "_PostToTag"
+└─ Add foreign key "_PostToTag_B_fkey" on "_PostToTag"
+migrations/app/20261101T1324_add_post_subtitle
+└─ Add column "subtitle" to "Post"
+
+from:       e2b10078c8f762c7544b5ee625263cb0a291e127e8a70f90b78af01582d9d2d6
+to:         75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f
+baseline:   migrations/app/20261101T1323_baseline
+app space:  migrations/app/20261101T1324_add_post_subtitle
+
+ℹ DDL preview
+
+CREATE SCHEMA IF NOT EXISTS "public";
+CREATE TABLE "public"."Post" (
+  "createdAt" timestamp(3) DEFAULT (now()) NOT NULL,
+  "id" uuid DEFAULT (gen_random_uuid()) NOT NULL,
+  "metadata" jsonb NOT NULL,
+  "price" numeric(10,2) NOT NULL,
+  "title" character varying(255) NOT NULL,
+  "updatedAt" timestamp(3) NOT NULL,
+  CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
+);
+CREATE TABLE "public"."Tag" (
+  "id" text NOT NULL,
+  "label" character varying(100) NOT NULL,
+  CONSTRAINT "Tag_pkey" PRIMARY KEY ("id")
+);
+CREATE TABLE "public"."_PostToTag" (
+  "A" uuid NOT NULL,
+  "B" text NOT NULL,
+  CONSTRAINT "_PostToTag_AB_pkey" PRIMARY KEY ("A", "B")
+);
+CREATE INDEX "_PostToTag_B_index" ON "public"."_PostToTag" ("B");
+ALTER TABLE "public"."_PostToTag"
+ADD CONSTRAINT "_PostToTag_A_fkey"
+FOREIGN KEY ("A")
+REFERENCES "public"."Post" ("id")
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+ALTER TABLE "public"."_PostToTag"
+ADD CONSTRAINT "_PostToTag_B_fkey"
+FOREIGN KEY ("B")
+REFERENCES "public"."Tag" ("id")
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+ALTER TABLE "public"."Post" ADD COLUMN "subtitle" character varying(255);
+
+→ Review migrations/app/20261101T1323_baseline and migrations/app/20261101T1324_add_post_subtitle
+→ Apply the migration: prisma db migrate
+migrations/app/20261101T1323_baseline
+migrations/app/20261101T1324_add_post_subtitle
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.20, synced none). Run: prisma skills sync
+▸ Running migration plan across spaces
+✔ Running migration plan across spaces
+│  migrations:  migrations
+│  database:    postgresql://****:****@127.0.0.1:54399/lab
+
+✔ Applied 1 migration(s) (1 operation(s)) across 1 contract space(s)
+
+App space
+├─ Add column "subtitle" to "Post"
+└─ marker 75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f
+
+✔ Advanced ref "db" → 75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f
+→ Check every space against the database: prisma migration status
+app	20261101T1324_add_post_subtitle	e2b10078c8f762c7544b5ee625263cb0a291e127e8a70f90b78af01582d9d2d6	75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f	1
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.20, synced none). Run: prisma skills sync
+▸ Connecting to database...
+✔ Connecting to database...
+▸ Verifying database marker...
+✔ Verifying database marker...
+▸ Introspecting database schema
+✔ Introspecting database schema
+▸ Verifying contract spaces
+✔ Verifying contract spaces
+│  contract:  generated/prisma8/contract.json
+│  mode:      full (marker + schema, tolerant)
+│  database:  postgresql://****:****@127.0.0.1:54399/lab
+
+✔ Database marker and schema match contract
+
+storageHash:  75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f
+profileHash:  3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.20, synced none). Run: prisma skills sync
+▸ Connecting to database...
+✔ Connecting to database...
+▸ Verifying database marker...
+✔ Verifying database marker...
+▸ Introspecting database schema
+✔ Introspecting database schema
+▸ Verifying contract spaces
+✔ Verifying contract spaces
+│  contract:  generated/prisma8/contract.json
+│  mode:      full (marker + schema, strict)
+│  database:  postgresql://****:****@127.0.0.1:54399/lab
+
+✔ Database marker and schema match contract
+
+storageHash:  75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f
+profileHash:  3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.20, synced none). Run: prisma skills sync
+LABEL check
+postCount 3
+tagCount 3
+joinCount 4
+tagIds ["cmvxuxbf50000oczs7dkrd7z0","cmvxuxbfs0001oczsudwkbhd1","cmvxuxbfu0002oczshxs9410i"]
+joinPairs [["1fa371cd-80ef-4a4d-82bb-11560d7be337","cmvxuxbfs0001oczsudwkbhd1"],["1fa371cd-80ef-4a4d-82bb-11560d7be337","cmvxuxbfu0002oczshxs9410i"],["6ac425c5-6150-418a-9923-e58917f0ebfd","cmvxuxbf50000oczs7dkrd7z0"],["6ac425c5-6150-418a-9923-e58917f0ebfd","cmvxuxbfs0001oczsudwkbhd1"]]
+sha256 779594a7b5ed20a933a9818c3308f7a14d6bbee19e983915fbda57d4d406cd56
+COLUMNS
+  Post.id uuid
+  Post.title varchar
+  Post.price numeric
+  Post.metadata jsonb
+  Post.createdAt timestamp
+  Post.updatedAt timestamp
+  Post.subtitle varchar
+  Tag.id text
+  Tag.label varchar
+  _PostToTag.A uuid
+  _PostToTag.B text
+  _prisma_migrations.id varchar
+  _prisma_migrations.checksum varchar
+  _prisma_migrations.finished_at timestamptz
+  _prisma_migrations.migration_name varchar
+  _prisma_migrations.logs text
+  _prisma_migrations.rolled_back_at timestamptz
+  _prisma_migrations.started_at timestamptz
+  _prisma_migrations.applied_steps_count int4

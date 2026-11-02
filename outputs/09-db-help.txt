@@ -1,0 +1,17 @@
+prisma db → Run contract operations against a live database. Verify, sign, update, migrate
+
+│  init             Bootstrap a database to match the current contract and sign it
+│  schema           Inspect the live database schema
+│  sign [contract]  Sign the database with your contract so you can safely run queries
+│  update           Update your database schema to match your contract
+│  verify           Check whether the database marker and live schema match your contract
+│  migrate          Apply planned migrations to advance the database
+│
+│  These commands run against a live database, addressed with --db <url>.
+│  Verify checks the database against the contract (the PSL description of your
+│  data model), sign marks it as matching, and update and migrate advance its
+│  schema.
+│
+│  Run 'prisma db <command> --help' for details on a command.
+
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.20, synced none). Run: prisma skills sync

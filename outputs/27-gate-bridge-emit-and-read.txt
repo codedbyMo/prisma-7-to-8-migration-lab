@@ -1,0 +1,22 @@
+=== GATE: bridge emit + bridge read, pairing CLI 8.0.0-rc.29-dev.177 / lib 8.0.0-rc.22-dev.1, 2026-11-01T14:26:22Z ===
+--- npx prisma contract emit --config bridge/bridge.config.ts ---
+▸ Resolving contract source...
+✔ Resolving contract source...
+▸ Emitting contract...
+✔ Emitting contract...
+│  contract:  bridge/out/contract.json
+│  types:     bridge/out/contract.d.ts
+
+✔ Emitted contract.json and contract.d.ts
+
+storageHash:    82e3a3672108d3888729ab3b0b439509edd26356f162684c71d1de3b2ff17386
+executionHash:  5dfe2100f3a5521705630ac6ebb906f20ba608f07ac5cce5c49b4804a4175d70
+profileHash:    3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2
+bridge/out/contract.json
+bridge/out/contract.d.ts
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.22-dev.1, synced none). Run: prisma skills sync
+bridge emit exit: 0
+--- npx tsx bridge/read-bridge.ts ---
+BRIDGE createdAtType=object ctor=Date value=Sun Nov 01 2026 14:25:37 GMT+0000 (Coordinated Universal Time)
+BRIDGE updatedAtType=object
+bridge read exit: 0

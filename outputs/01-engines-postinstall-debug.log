@@ -1,0 +1,41 @@
+prisma:get-platform Found distro info:
+{
+  "targetDistro": "debian",
+  "familyDistro": "debian",
+  "originalDistro": "ubuntu"
+} +147ms
+prisma:get-platform Trying platform-specific paths for "debian" (and "ubuntu") +1ms
+prisma:get-platform Found libssl.so file using platform-specific paths: libssl.so.3 +2ms
+prisma:get-platform The parsed libssl version is: 3.0.x +0ms
+prisma:fetch-engine:download file /home/hatch/workspace/prisma-7-to-8-migration-lab/app/node_modules/@prisma/engines/schema-engine-debian-openssl-3.0.x does not exist and must be downloaded +4ms
+prisma:fetch-engine:download https://binaries.prisma.sh/all_commits/d1b3f377ca835d73fd50954a5e22128b9ebdd6b8/debian-openssl-3.0.x/schema-engine.gz will be downloaded to /home/hatch/workspace/prisma-7-to-8-migration-lab/app/node_modules/@prisma/engines/schema-engine-debian-openssl-3.0.x +0ms
+prisma:fetch-engine:download Downloading https://binaries.prisma.sh/all_commits/d1b3f377ca835d73fd50954a5e22128b9ebdd6b8/debian-openssl-3.0.x/schema-engine.gz to /home/hatch/workspace/prisma-7-to-8-migration-lab/app/node_modules/@prisma/engines/schema-engine-debian-openssl-3.0.x ... +1ms
+prisma:fetch-engine:getProxyAgent noProxy is set to "localhost,127.0.0.1,::1,[::1],198.19.0.1,198.19.0.2,fd8b:4f84:7d32:99::1,[fd8b:4f84:7d32:99::1],fd8b:4f84:7d32:99::2,[fd8b:4f84:7d32:99::2]" +2ms
+prisma:fetch-engine:getProxyAgent uri.protocol is HTTPS and the URL for the proxy is "http://hatch-runtime:e193501300014b4aadbd39916f774f1c@hatch-egress-proxy:3128" +0ms
+prisma:fetch-engine:getProxyAgent noProxy is set to "localhost,127.0.0.1,::1,[::1],198.19.0.1,198.19.0.2,fd8b:4f84:7d32:99::1,[fd8b:4f84:7d32:99::1],fd8b:4f84:7d32:99::2,[fd8b:4f84:7d32:99::2]" +14ms
+prisma:fetch-engine:getProxyAgent uri.protocol is HTTPS and the URL for the proxy is "http://hatch-runtime:e193501300014b4aadbd39916f774f1c@hatch-egress-proxy:3128" +0ms
+prisma:fetch-engine:getProxyAgent noProxy is set to "localhost,127.0.0.1,::1,[::1],198.19.0.1,198.19.0.2,fd8b:4f84:7d32:99::1,[fd8b:4f84:7d32:99::1],fd8b:4f84:7d32:99::2,[fd8b:4f84:7d32:99::2]" +395ms
+prisma:fetch-engine:getProxyAgent uri.protocol is HTTPS and the URL for the proxy is "http://hatch-runtime:e193501300014b4aadbd39916f774f1c@hatch-egress-proxy:3128" +0ms
+prisma:fetch-engine:downloadZip An error occurred while downloading the engine file {
+  "code": "ECONNRESET",
+  "attemptNumber": 1,
+  "retriesLeft": 2
+} +1522ms
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+Error: aborted
+    at TLSSocket.socketCloseListener (node:_http_client:734:19)
+    at TLSSocket.emit (node:events:526:24)
+    at node:net:362:12
+    at Socket.done (node:internal/tls/wrap:780:7)
+    at Socket.wrapper (node:events:639:12)
+    at Socket.emit (node:events:526:24)
+    at TCP.<anonymous> (node:net:362:12) {
+  code: 'ECONNRESET',
+  attemptNumber: 1,
+  retriesLeft: 2
+}
+
+Node.js v24.22.1

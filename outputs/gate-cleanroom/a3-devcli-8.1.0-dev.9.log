@@ -1,0 +1,41 @@
+=== ATTEMPT a3-devcli-8.1.0-dev.9  2026-11-01T14:20:38Z ===
+pairing: prisma(CLI)=8.1.0-dev.9  @prisma/orm-postgres=8.0.0-rc.22  @prisma/orm-framework(direct)=8.0.0-rc.22
+node: v24.22.1  npm: 10.9.4
+--- npm install ---
+npm error   retriesLeft: 2
+npm error }
+npm error
+npm error Node.js v24.22.1
+npm error A complete log of this run can be found in: /home/hatch/.npm/_logs/2026-11-01T14_20_38_316Z-debug-0.log
+install exit: 1
+--- installed versions ---
+prisma NOT FOUND
+@prisma/orm-postgres NOT FOUND
+@prisma/orm-framework NOT FOUND
+--- npm ls @prisma/orm-framework ---
+prisma-gate-attempt@1.0.0 /home/hatch/workspace/prisma-gate-attempt
+`-- (empty)
+
+--- COMMAND: npx prisma contract emit ---
+node:internal/modules/esm/resolve:202
+  const resolvedOption = FSLegacyMainResolve(pkgPath, packageConfig.main, baseStringified);
+                         ^
+
+Error: Cannot find package '/home/hatch/.npm/_npx/2778af9cee32ff87/node_modules/tinyglobby/index.js' imported from /home/hatch/.npm/_npx/2778af9cee32ff87/node_modules/@manypkg/tools/dist/manypkg-tools.js
+    at legacyMainResolve (node:internal/modules/esm/resolve:202:26)
+    at packageResolve (node:internal/modules/esm/resolve:796:12)
+    at moduleResolve (node:internal/modules/esm/resolve:873:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:705:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:725:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:763:56)
+    at #resolve (node:internal/modules/esm/loader:687:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:607:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:276:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.22.1
+EMIT EXIT: 1
+--- generated output ---
+(no generated output)

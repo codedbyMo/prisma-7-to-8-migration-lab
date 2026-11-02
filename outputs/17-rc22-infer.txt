@@ -1,0 +1,8 @@
+=== rc.29/rc.22: contract infer (scratch) ===
+▸ Connecting to database...
+✘ Connecting to database...
+✘ [CLI.UNEXPECTED] Unexpected error
+  why: Unexpected error during contract infer: Cannot use 'in' operator to search for 'kind' in typeChoice
+→ Check the error message and try again
+  docs: https://docs.prisma.io/docs/orm/v8/reference/error-reference/CLI.UNEXPECTED
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.22, synced none). Run: prisma skills sync

@@ -1,0 +1,26 @@
+=== REBUILD on fresh cluster, original pins (CLI 8.0.0-rc.27 / ORM 8.0.0-rc.20 / Prisma 7 7.10.1), 2026-11-01T13:19:32Z ===
+Loaded Prisma config from prisma7.config.ts.
+
+Prisma schema loaded from prisma/schema.prisma.
+prisma7              : 7.10.1
+@prisma/client       : 7.10.1
+Operating System     : linux
+Architecture         : x64
+Node.js              : v24.22.1
+TypeScript           : 5.9.3
+Query Compiler       : enabled
+PSL                  : @prisma/prisma-schema-wasm 8.1.0-1.d1b3f377ca835d73fd50954a5e22128b9ebdd6b8
+Schema Engine        : schema-engine-cli d1b3f377ca835d73fd50954a5e22128b9ebdd6b8 (at node_modules/@prisma/engines/schema-engine-debian-openssl-3.0.x)
+Default Engines Hash : d1b3f377ca835d73fd50954a5e22128b9ebdd6b8
+Studio               : 0.33.0
+Prisma CLI Path      : /home/hatch/workspace/prisma-7-to-8-migration-lab/app/node_modules/@prisma/prisma7/node_modules/prisma
+Loaded Prisma config from prisma7.config.ts.
+
+Prisma schema loaded from prisma/schema.prisma.
+The schema at prisma/schema.prisma is valid 🚀
+Loaded Prisma config from prisma7.config.ts.
+
+Prisma schema loaded from prisma/schema.prisma.
+
+✔ Generated Prisma Client (7.10.1) to ./generated/prisma in 95ms
+

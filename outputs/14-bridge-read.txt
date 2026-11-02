@@ -1,0 +1,2 @@
+BRIDGE createdAtType=string ctor=String value=2026-10-25 20:12:53.903
+BRIDGE updatedAtType=string

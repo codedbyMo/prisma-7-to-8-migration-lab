@@ -1,0 +1,5 @@
+// use prisma-8
+model Tag {
+  id    String @id @onCreate(cuid(1))
+  label VarChar(100)
+}

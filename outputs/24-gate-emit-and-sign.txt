@@ -1,0 +1,35 @@
+=== GATE: emit (pre-subtitle contract) + db sign, pairing CLI 8.0.0-rc.29-dev.177 / lib 8.0.0-rc.22-dev.1, 2026-11-01T14:25:43Z ===
+--- npx prisma contract emit ---
+▸ Resolving contract source...
+✔ Resolving contract source...
+▸ Emitting contract...
+✔ Emitting contract...
+│  contract:  generated/prisma8/contract.json
+│  types:     generated/prisma8/contract.d.ts
+
+✔ Emitted contract.json and contract.d.ts
+
+storageHash:    e2b10078c8f762c7544b5ee625263cb0a291e127e8a70f90b78af01582d9d2d6
+executionHash:  6bb269978fc138298b895912c9dce6dd1852abbcb705b17eaf49ec62c2543061
+profileHash:    3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2
+generated/prisma8/contract.json
+generated/prisma8/contract.d.ts
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.22-dev.1, synced none). Run: prisma skills sync
+emit exit: 0
+--- npx prisma db sign ---
+▸ Connecting to database...
+✔ Connecting to database...
+▸ Introspecting database schema
+✔ Introspecting database schema
+▸ Signing database
+✔ Signing database
+│  contract:  generated/prisma8/contract.json
+│  database:  postgresql://****:****@127.0.0.1:54399/lab
+
+✔ app: signed e2b10078c8f762c7544b5ee625263cb0a291e127e8a70f90b78af01582d9d2d6 (no marker before)
+
+✔ Database signed
+✔ Advanced ref "db" → e2b10078c8f762c7544b5ee625263cb0a291e127e8a70f90b78af01582d9d2d6 (was 75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f)
+app	created	e2b10078c8f762c7544b5ee625263cb0a291e127e8a70f90b78af01582d9d2d6
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.22-dev.1, synced none). Run: prisma skills sync
+sign exit: 0

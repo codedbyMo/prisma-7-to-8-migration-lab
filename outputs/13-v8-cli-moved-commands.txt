@@ -1,0 +1,13 @@
+✘ [CLI.COMMAND_MOVED] `migrate dev` has been replaced
+  why: Prisma 8 emits the contract, plans the migration and applies it in separate steps: run `contract emit`, then `migration plan --name <name>` (for `--create-only`, stop here), then `db migrate --advance-ref db`; while Prisma 7 still owns this project's migrations, run `migrate dev` with Prisma 7's CLI instead.
+→ Use the replacement: prisma contract emit
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.20, synced none). Run: prisma skills sync
+MIGRATE_DEV_EXIT=2
+✘ [CLI.UNKNOWN_COMMAND] No command registered for `generate`
+→ List every command: prisma --help
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.20, synced none). Run: prisma skills sync
+GENERATE_EXIT=2
+✘ [CLI.UNKNOWN_COMMAND] No command registered for `validate`
+→ List every command: prisma --help
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.20, synced none). Run: prisma skills sync
+VALIDATE_EXIT=2

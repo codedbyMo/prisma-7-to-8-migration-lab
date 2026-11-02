@@ -1,0 +1,64 @@
+│  contract:    generated/prisma8/contract.json
+│  migrations:  migrations/app
+│  name:        add_post_subtitle
+
+✔ Planned baseline (7 operation(s)) + 1 operation(s)
+
+migrations/app/20261025T2019_baseline
+├─ Create schema "public"
+├─ Create table "Post"
+├─ Create table "Tag"
+├─ Create table "_PostToTag"
+├─ Create index "_PostToTag_B_index" on "_PostToTag"
+├─ Add foreign key "_PostToTag_A_fkey" on "_PostToTag"
+└─ Add foreign key "_PostToTag_B_fkey" on "_PostToTag"
+migrations/app/20261025T2020_add_post_subtitle
+└─ Add column "subtitle" to "Post"
+
+from:       e2b10078c8f762c7544b5ee625263cb0a291e127e8a70f90b78af01582d9d2d6
+to:         75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f
+baseline:   migrations/app/20261025T2019_baseline
+app space:  migrations/app/20261025T2020_add_post_subtitle
+
+ℹ DDL preview
+
+CREATE SCHEMA IF NOT EXISTS "public";
+CREATE TABLE "public"."Post" (
+  "createdAt" timestamp(3) DEFAULT (now()) NOT NULL,
+  "id" uuid DEFAULT (gen_random_uuid()) NOT NULL,
+  "metadata" jsonb NOT NULL,
+  "price" numeric(10,2) NOT NULL,
+  "title" character varying(255) NOT NULL,
+  "updatedAt" timestamp(3) NOT NULL,
+  CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
+);
+CREATE TABLE "public"."Tag" (
+  "id" text NOT NULL,
+  "label" character varying(100) NOT NULL,
+  CONSTRAINT "Tag_pkey" PRIMARY KEY ("id")
+);
+CREATE TABLE "public"."_PostToTag" (
+  "A" uuid NOT NULL,
+  "B" text NOT NULL,
+  CONSTRAINT "_PostToTag_AB_pkey" PRIMARY KEY ("A", "B")
+);
+CREATE INDEX "_PostToTag_B_index" ON "public"."_PostToTag" ("B");
+ALTER TABLE "public"."_PostToTag"
+ADD CONSTRAINT "_PostToTag_A_fkey"
+FOREIGN KEY ("A")
+REFERENCES "public"."Post" ("id")
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+ALTER TABLE "public"."_PostToTag"
+ADD CONSTRAINT "_PostToTag_B_fkey"
+FOREIGN KEY ("B")
+REFERENCES "public"."Tag" ("id")
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+ALTER TABLE "public"."Post" ADD COLUMN "subtitle" character varying(255);
+
+→ Review migrations/app/20261025T2019_baseline and migrations/app/20261025T2020_add_post_subtitle
+→ Apply the migration: prisma db migrate
+migrations/app/20261025T2019_baseline
+migrations/app/20261025T2020_add_post_subtitle
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.20, synced none). Run: prisma skills sync

@@ -1,0 +1,30 @@
+// use prisma-8
+// Contract inferred from the live database schema. Edit as needed, then run `prisma contract emit`.
+
+model Post {
+  id         Uuid               @id(map: "Post_pkey") @default(sql`gen_random_uuid()`)
+  title      VarChar(255)
+  price      Numeric(10, 2)
+  metadata   Jsonb
+  createdAt  TimestampString(3) @default(now())
+  updatedAt  TimestampString(3)
+  subtitle   VarChar(255)?
+  postToTags PostToTag[]
+}
+
+model Tag {
+  id         String       @id(map: "Tag_pkey")
+  label      VarChar(100)
+  postToTags PostToTag[]
+}
+
+model PostToTag {
+  a    Uuid   @map("A")
+  b    String @map("B")
+  post Post   @relation(fields: [a], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "_PostToTag_A_fkey", index: "_PostToTag_AB_pkey")
+  tag  Tag    @relation(fields: [b], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "_PostToTag_B_fkey")
+
+  @@id([a, b], map: "_PostToTag_AB_pkey")
+  @@index([b], map: "_PostToTag_B_index")
+  @@map("_PostToTag")
+}

@@ -1,0 +1,5 @@
+SEED_OK posts=3 tags=3
+TAG database id=cmvo9lkms0001iyzsddfe4lcz idType=string
+TAG release-notes id=cmvo9lkmv0002iyzsskl285to idType=string
+TAG typescript id=cmvo9lkku0000iyzsbxjlzaqg idType=string
+SAMPLE createdAt ctor=Date isDate=true

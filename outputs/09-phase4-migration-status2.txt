@@ -1,0 +1,7 @@
+│  migrations:  migrations
+│  database:    postgresql://****:****@127.0.0.1:54399/lab
+
+(no migrations)
+
+✔ No migrations found
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.20, synced none). Run: prisma skills sync

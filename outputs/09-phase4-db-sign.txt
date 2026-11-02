@@ -1,0 +1,21 @@
+▸ Connecting to database...
+✔ Connecting to database...
+▸ Introspecting database schema
+✔ Introspecting database schema
+▸ Signing database
+✔ Signing database
+│  contract:  generated/prisma8/contract.json
+│  database:  postgresql://****:****@127.0.0.1:54399/lab
+
+✘ app: not signed, the schema does not satisfy its contract
+└─ ✘ missing: database/public/_PostToTag/index:_PostToTag_A_idx_b3f15882
+
+✘ Database schema does not satisfy contract for space "app"; signed nothing
+
+✘ [CONTRACT.SCHEMA_VERIFICATION_FAILED] Database schema does not satisfy contract (1 failure)
+  why: The live schema differs: missing: database/public/_PostToTag/index:_PostToTag_A_idx_b3f15882.
+→ Change the database to match the contract, then sign again: prisma db update
+→ Or change the contract source to describe the database as it is, re-run contract emit, then sign again
+  docs: https://docs.prisma.io/docs/orm/v8/reference/error-reference/CONTRACT.SCHEMA_VERIFICATION_FAILED
+app	failed	1163761ba61cb21b81cb1f6cb5a7347929660b7042c0e8b0a85b0748d2d344a4
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.20, synced none). Run: prisma skills sync

@@ -1,0 +1,15 @@
+▸ Running migration plan across spaces
+✔ Running migration plan across spaces
+│  migrations:  migrations
+│  database:    postgresql://****:****@127.0.0.1:54399/lab
+
+✔ Applied 1 migration(s) (1 operation(s)) across 1 contract space(s)
+
+App space
+├─ Add column "subtitle" to "Post"
+└─ marker 75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f
+
+✔ Advanced ref "db" → 75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f
+→ Check every space against the database: prisma migration status
+app	20261025T2020_add_post_subtitle	e2b10078c8f762c7544b5ee625263cb0a291e127e8a70f90b78af01582d9d2d6	75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f	1
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.20, synced none). Run: prisma skills sync

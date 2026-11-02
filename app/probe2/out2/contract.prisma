@@ -1,0 +1,11 @@
+// use prisma-8
+// Hand-written probe contract (contract infer in rc.27 only introspects
+// the public schema, so this file was authored directly to test how a
+// timestamptz column behaves through the Prisma ORM 8 client).
+
+namespace probe {
+  model Event {
+    id         String   @id
+    happenedAt DateTime
+  }
+}

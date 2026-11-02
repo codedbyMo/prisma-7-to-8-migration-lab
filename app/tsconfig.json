@@ -1,0 +1,1 @@
+{"compilerOptions":{"esModuleInterop":true,"module":"preserve","moduleResolution":"bundler","noEmit":true,"resolveJsonModule":true,"skipLibCheck":true,"strict":true,"target":"ES2023"},"include":["src/**/*.ts","generated/prisma/**/*.ts","generated/prisma8/**/*.d.ts"]}

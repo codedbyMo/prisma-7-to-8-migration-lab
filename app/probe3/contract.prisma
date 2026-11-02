@@ -1,0 +1,10 @@
+// use prisma-8
+// Contract inferred from the live database schema. Edit as needed, then run `prisma contract emit`.
+
+model ProbeEvent {
+  id         Int                 @id(map: "ProbeEvent_pkey")
+  happenedAt DateTime?
+  legacyAt   TimestamptzTemporal?
+  day        Date?
+  atTime     Time(precision: 3)?
+}

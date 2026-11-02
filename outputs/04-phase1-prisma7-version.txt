@@ -1,0 +1,15 @@
+Loaded Prisma config from prisma7.config.ts.
+
+Prisma schema loaded from prisma/schema.prisma.
+prisma7              : 7.10.1
+@prisma/client       : 7.10.1
+Operating System     : linux
+Architecture         : x64
+Node.js              : v24.22.1
+TypeScript           : 5.9.3
+Query Compiler       : enabled
+PSL                  : @prisma/prisma-schema-wasm 8.1.0-1.d1b3f377ca835d73fd50954a5e22128b9ebdd6b8
+Schema Engine        : schema-engine-cli d1b3f377ca835d73fd50954a5e22128b9ebdd6b8 (at node_modules/@prisma/engines/schema-engine-debian-openssl-3.0.x)
+Default Engines Hash : d1b3f377ca835d73fd50954a5e22128b9ebdd6b8
+Studio               : 0.33.0
+Prisma CLI Path      : /home/hatch/workspace/prisma-7-to-8-migration-lab/app/node_modules/prisma

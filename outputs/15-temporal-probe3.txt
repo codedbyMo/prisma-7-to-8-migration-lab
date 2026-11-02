@@ -1,0 +1,14 @@
+▸ Resolving contract source...
+✔ Resolving contract source...
+▸ Emitting contract...
+✔ Emitting contract...
+│  contract:  probe2/out2/contract.json
+│  types:     probe2/out2/contract.d.ts
+
+✔ Emitted contract.json and contract.d.ts
+
+storageHash:  6c46cc2bb9cf340595f8e3fc31bf40e3ade456ae2daf8d166e00b47d0d38b7b4
+profileHash:  3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2
+probe2/out2/contract.json
+probe2/out2/contract.d.ts
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.20, synced none). Run: prisma skills sync

@@ -1,0 +1,15 @@
+▸ Connecting to database...
+✔ Connecting to database...
+▸ Introspecting database schema
+✔ Introspecting database schema
+▸ Signing database
+✔ Signing database
+│  contract:  generated/prisma8/contract.json
+│  database:  postgresql://****:****@127.0.0.1:54399/lab
+
+✔ app: signed e2b10078c8f762c7544b5ee625263cb0a291e127e8a70f90b78af01582d9d2d6 (no marker before)
+
+✔ Database signed
+✔ Advanced ref "db" → e2b10078c8f762c7544b5ee625263cb0a291e127e8a70f90b78af01582d9d2d6
+app	created	e2b10078c8f762c7544b5ee625263cb0a291e127e8a70f90b78af01582d9d2d6
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.20, synced none). Run: prisma skills sync

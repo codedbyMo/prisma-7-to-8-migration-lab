@@ -1,0 +1,12 @@
+=== rc.29/rc.22: emit main contract + verify signed DB ===
+▸ Resolving contract source...
+✘ Resolving contract source...
+✘ [CLI.UNEXPECTED] Cannot use 'in' operator to search for 'kind' in typeChoice
+  docs: https://docs.prisma.io/docs/orm/v8/reference/error-reference/CLI.UNEXPECTED
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.22, synced none). Run: prisma skills sync
+✘ [CLI.UNEXPECTED] Cannot use 'in' operator to search for 'kind' in typeChoice
+  docs: https://docs.prisma.io/docs/orm/v8/reference/error-reference/CLI.UNEXPECTED
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.22, synced none). Run: prisma skills sync
+✘ [CLI.UNEXPECTED] Cannot use 'in' operator to search for 'kind' in typeChoice
+  docs: https://docs.prisma.io/docs/orm/v8/reference/error-reference/CLI.UNEXPECTED
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.22, synced none). Run: prisma skills sync

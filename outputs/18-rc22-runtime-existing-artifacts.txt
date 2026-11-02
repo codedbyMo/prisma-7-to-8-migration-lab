@@ -1,0 +1,24 @@
+=== rc.22 runtime (lib 8.0.0-rc.22, one framework copy), artifacts emitted under the rc.20 pairing ===
+--- query8 (native contract read: Post/Tag/PostTag + v7 client count) ---
+V8_POSTS_COUNT 3
+V8_POST id=1fa371cd-80ef-4a4d-82bb-11560d7be337 title="Shipping the RC by Accident" createdAtType=string createdAtCtor=String createdAt=2026-11-01T13:19:49.327
+V8_POST id=6ac425c5-6150-418a-9923-e58917f0ebfd title="Prisma 8 Is Breaking Your Schema" createdAtType=string createdAtCtor=String createdAt=2026-11-01T13:19:49.318
+V8_POST id=aacf1f90-4155-4e4a-8b7b-0b05018f3176 title="Untagged Notes" createdAtType=string createdAtCtor=String createdAt=2026-11-01T13:19:49.331
+V8_TAGS_COUNT 3
+V8_TAG id=cmvxuxbfs0001oczsudwkbhd1 label=database
+V8_TAG id=cmvxuxbfu0002oczshxs9410i label=release-notes
+V8_TAG id=cmvxuxbf50000oczs7dkrd7z0 label=typescript
+V8_POSTTAG_COUNT 4
+V8_POSTTAG postId=6ac425c5-6150-418a-9923-e58917f0ebfd tagId=cmvxuxbf50000oczs7dkrd7z0
+V8_POSTTAG postId=6ac425c5-6150-418a-9923-e58917f0ebfd tagId=cmvxuxbfs0001oczsudwkbhd1
+V8_POSTTAG postId=1fa371cd-80ef-4a4d-82bb-11560d7be337 tagId=cmvxuxbfs0001oczsudwkbhd1
+V8_POSTTAG postId=1fa371cd-80ef-4a4d-82bb-11560d7be337 tagId=cmvxuxbfu0002oczshxs9410i
+V7_POSTS_COUNT 3
+--- write8 (create Tag via v8 client, cuid(2)) ---
+V8_CREATED_TAG {"id":"zbq1e9nmc0ocugm61hl1tba0","label":"written-by-v8"}
+V8_CREATED_ID_TYPE string length=24
+V8_READBACK_COUNT 1
+CLEANUP_DELETED_ROWS 1
+--- bridge read (bridge artifacts emitted under rc.20 pairing; measures artifact compatibility, not the rc.22 bridge mapping) ---
+BRIDGE createdAtType=string ctor=String value=2026-11-01T13:19:49.327
+BRIDGE updatedAtType=string

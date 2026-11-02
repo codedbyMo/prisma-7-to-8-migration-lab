@@ -1,0 +1,43 @@
+prisma contract → Author your data contract: the PSL source of your data model. Emit, infer, format, print
+
+│  emit    Emit your contract artifacts
+│  infer   Infer a PSL contract from the live database schema
+│  format  Format your PSL contract source
+│  print   Print the configured contract as Prisma 8 PSL
+│
+│  A contract is the declarative description of your application's data model,
+│  authored in PSL (Prisma Schema Language). Migrations are planned from it,
+│  and live databases are verified and signed against it. Emit generates its
+│  artifacts, infer derives a contract from an existing database, format
+│  normalizes the source, and print writes the contract your config loads as
+│  PSL.
+│
+│  Run 'prisma contract <command> --help' for details on a command.
+
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.20, synced none). Run: prisma skills sync
+prisma contract infer → Infer a PSL contract from the live database schema
+
+│  Usage
+│    $ prisma contract infer [options]
+│
+│  Reads the live database schema and writes an inferred PSL contract to
+│  disk. This command stops at contract.prisma; follow it with
+│  `contract emit` and `db sign` as separate steps. An existing file at the
+│  output path is overwritten, with a warning.
+│
+│  Options
+│      --db <url>       Database connection string
+│      --output <path>  Write the inferred PSL contract to the specified path
+│
+│  Global options also apply: --format, --json, --log-level, --verbose,
+│  --quiet, --yes, --confirm, --interactive, --color, --config. Run 'prisma
+│  --help' for details.
+│
+│  Examples
+│    $ prisma contract infer --db $DATABASE_URL
+│    $ prisma contract infer --db $DATABASE_URL --output ./src/prisma/contract.prisma
+│    $ prisma contract infer --json
+│
+│  Docs  https://docs.prisma.io/docs/orm/v8/reference/error-reference/
+
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.20, synced none). Run: prisma skills sync

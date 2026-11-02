@@ -1,0 +1,12 @@
+===== CASE e-oncreate-cuid1 (CLI rc.29 + lib rc.21 pairing) =====
+▸ Resolving contract source...
+✘ Resolving contract source...
+✘ [CONTRACT.SOURCE_LOAD_FAILED] Failed to resolve contract source
+  why: PSL to SQL contract interpretation failed
+→ Edit the source where each finding points, then run the command again.
+  docs: https://docs.prisma.io/docs/orm/v8/reference/error-reference/CONTRACT.SOURCE_LOAD_FAILED
+
+✘ [CONTRACT.SOURCE_DIAGNOSTIC] psl-tests/e-oncreate-cuid1.prisma:3:35 PSL_INVALID_GENERATOR_ARGUMENT: cuid: version must be 2, got 1
+  docs: https://docs.prisma.io/docs/orm/v8/reference/error-reference/CONTRACT.SOURCE_DIAGNOSTIC
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.21, synced none). Run: prisma skills sync
+EXIT=2

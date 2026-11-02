@@ -1,0 +1,39 @@
+=== ATTEMPT a4-devcli-rc29-dev.177  2026-11-01T14:21:15Z ===
+pairing: prisma(CLI)=8.0.0-rc.29-dev.177  @prisma/orm-postgres=8.0.0-rc.22  @prisma/orm-framework(direct)=8.0.0-rc.22
+node: v24.22.1  npm: 10.9.4
+--- npm install ---
+
+added 353 packages in 1m
+install exit: 0
+--- installed versions ---
+prisma 8.0.0-rc.29-dev.177
+@prisma/orm-postgres 8.0.0-rc.22
+@prisma/orm-framework 8.0.0-rc.22
+--- npm ls @prisma/orm-framework ---
+prisma-gate-attempt@1.0.0 /home/hatch/workspace/prisma-gate-attempt
++-- @prisma/orm-framework@8.0.0-rc.22
++-- @prisma/orm-postgres@8.0.0-rc.22
+| +-- @prisma/orm-family-sql@8.0.0-rc.22
+| | `-- @prisma/orm-framework@8.0.0-rc.22 deduped
+| +-- @prisma/orm-framework@8.0.0-rc.22 deduped
+| +-- @prisma/orm-target-postgres@8.0.0-rc.22
+| | `-- @prisma/orm-framework@8.0.0-rc.22 deduped
+| `-- @prisma/orm-toolchain@8.0.0-rc.22
+|   `-- @prisma/orm-framework@8.0.0-rc.22 deduped
+`-- prisma@8.0.0-rc.29-dev.177
+  `-- @prisma/orm-toolchain@8.0.0-rc.22-dev.1
+    `-- @prisma/orm-framework@8.0.0-rc.22-dev.1
+
+--- COMMAND: npx prisma contract emit ---
+▸ Resolving contract source...
+✘ Resolving contract source...
+✘ [RUNTIME.MULTIPLE_ORM_COPIES] Prisma ORM is loaded from 2 copies (8.0.0-rc.22-dev.1, 8.0.0-rc.22)
+  why: Values and registries made by one copy are not recognised by another, so every @prisma/orm-* package and the prisma CLI must use one copy.
+         8.0.0-rc.22-dev.1  /home/hatch/workspace/prisma-gate-attempt/node_modules/prisma/node_modules/@prisma/orm-framework
+         8.0.0-rc.22        /home/hatch/workspace/prisma-gate-attempt/node_modules/@prisma/orm-framework
+→ Install the same version of every @prisma/orm-* package, and a prisma CLI that runs that version. `npm ls @prisma/orm-framework`, `pnpm why @prisma/orm-framework` or `bun why @prisma/orm-framework` shows which package brought each copy.
+  docs: https://docs.prisma.io/docs/orm/v8/reference/error-reference/RUNTIME.MULTIPLE_ORM_COPIES
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.22, synced none). Run: prisma skills sync
+EMIT EXIT: 2
+--- generated output ---
+(no generated output)

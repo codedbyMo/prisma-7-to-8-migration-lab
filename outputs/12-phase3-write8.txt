@@ -1,0 +1,4 @@
+V8_CREATED_TAG {"id":"q1dn7bgj21nxh2sj370jh8r4","label":"written-by-v8"}
+V8_CREATED_ID_TYPE string length=24
+V8_READBACK_COUNT 1
+CLEANUP_DELETED_ROWS 1

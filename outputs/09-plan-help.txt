@@ -1,0 +1,36 @@
+prisma migration plan → Plan a migration from contract changes
+
+│  Usage
+│    $ prisma migration plan [options]
+│
+│  Compares the emitted contract against the latest on-disk migration state
+│  and produces a new migration package with the required operations.
+│  On an empty migrations directory a baseline package is derived from the
+│  `db` ref first. A plan that would lose data is written only once you say
+│  what each such operation means: --rename to keep the data under a new
+│  name, or --delete to let it go. Where nobody can answer, the command
+│  refuses and lists every question. Offline — does not consult the database.
+│
+│  Options
+│      --name <slug>            Name slug for the migration directory
+│      --from <contract>        Starting contract reference (hash, prefix, ref name, migration dir name, <dir>^, or @empty)
+│      --to <contract>          Destination contract reference (hash, prefix, ref name, migration dir name, or <dir>^); defaults to the emitted contract
+│      --rename <subject>...    Rename a model or field instead of dropping it: old:new, each side Model, namespace.Model, Model.field or namespace.Model.field; repeat for several, applied in order
+│      --delete <subject>...    Let the command lose the data of a model, field or storage name the refusal lists: --delete Model
+│      --convert <subject>...   Convert the values of a field whose type changes with code you write into the migration: Model.field, named as the new contract names it
+│      --backfill <subject>...  Fill a required field in existing rows with code you write into the migration: Model.field, new or made required
+│
+│  Global options also apply: --format, --json, --log-level, --verbose,
+│  --quiet, --yes, --confirm, --interactive, --color, --config. Run 'prisma
+│  --help' for details.
+│
+│  Examples
+│    $ prisma migration plan
+│    $ prisma migration plan --name add-users-table
+│    $ prisma migration plan --to <migration-dir>^ --name rollback
+│    $ prisma migration plan --rename Profile:User --delete Legacy
+│    $ prisma migration plan --json
+│
+│  Docs  https://docs.prisma.io/docs/orm/v8/reference/error-reference/
+
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.20, synced none). Run: prisma skills sync

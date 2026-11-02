@@ -1,0 +1,46 @@
+=== GATE: date probes (infer, emit, read) on database probes, pairing CLI 8.0.0-rc.29-dev.177 / lib 8.0.0-rc.22-dev.1, 2026-11-01T14:27:13Z ===
+--- npx prisma contract infer --config probe3/probe.config.ts ---
+▸ Connecting to database...
+✔ Connecting to database...
+▸ Introspecting database schema...
+✔ Introspecting database schema...
+│  database:  postgresql://****:****@127.0.0.1:54399/probes
+
+✔ Contract written to probe3/out/contract.prisma
+probe3/out/contract.prisma
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.22-dev.1, synced none). Run: prisma skills sync
+infer exit: 0
+--- inferred contract (probe3/contract.prisma) ---
+--- edited contract: legacyAt changed DateTime -> TimestamptzTemporal (probe3/contract.prisma) ---
+// use prisma-8
+// Contract inferred from the live database schema. Edit as needed, then run `prisma contract emit`.
+
+model ProbeEvent {
+  id         Int                 @id(map: "ProbeEvent_pkey")
+  happenedAt DateTime?
+  legacyAt   TimestamptzTemporal?
+  day        Date?
+  atTime     Time(precision: 3)?
+}
+--- npx prisma contract emit --config probe3/probe.config.ts ---
+▸ Resolving contract source...
+✔ Resolving contract source...
+▸ Emitting contract...
+✔ Emitting contract...
+│  contract:  probe3/out/contract.json
+│  types:     probe3/out/contract.d.ts
+
+✔ Emitted contract.json and contract.d.ts
+
+storageHash:  ff0cf15a4fef741079848931616bf6418aee3ecdec8e04eb398a0402896595e1
+profileHash:  3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2
+probe3/out/contract.json
+probe3/out/contract.d.ts
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.22-dev.1, synced none). Run: prisma skills sync
+probe emit exit: 0
+--- npx tsx probe3/read-probe.ts ---
+PROBE happenedAt typeof=object ctor=Date isDate=true isTemporalInstant=false value=Sun Nov 01 2026 10:15:30 GMT+0000 (Coordinated Universal Time)
+PROBE legacyAt typeof=object ctor=Instant isDate=false isTemporalInstant=true value=2026-11-01T10:15:30.123Z
+PROBE day typeof=string ctor=String isDate=false isTemporalInstant=false value=2026-11-01
+PROBE atTime typeof=string ctor=String isDate=false isTemporalInstant=false value=10:15:30.123
+probe read exit: 0

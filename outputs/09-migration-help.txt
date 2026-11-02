@@ -1,0 +1,20 @@
+prisma migration → Manage on-disk migrations derived from contract changes. Plan, inspect, check, track history
+
+│  check [target]  Verify artifact and graph integrity
+│  graph           Show the migration graph topology
+│  list            List on-disk migrations per contract space
+│  log             Show executed migration history
+│  new             Scaffold a new migration for manual authoring
+│  plan            Plan a migration from contract changes
+│  show <target>   Display migration package contents
+│  status          Show migration path and pending status
+│  ref             Manage refs: named pointers to contracts. Set, list, delete
+│
+│  A migration is an on-disk package describing one schema change, derived from
+│  edits to your contract (the PSL description of your data model). Plan writes
+│  one; the rest inspect, check integrity, and track what has run where. Apply
+│  them with 'db migrate'.
+│
+│  Run 'prisma migration <command> --help' for details on a command.
+
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.20, synced none). Run: prisma skills sync

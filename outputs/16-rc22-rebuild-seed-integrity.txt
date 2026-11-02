@@ -1,0 +1,51 @@
+Loaded Prisma config from prisma7.config.ts.
+
+Prisma schema loaded from prisma/schema.prisma.
+Datasource "db": PostgreSQL database "lab", schema "public" at "127.0.0.1:54399"
+
+1 migration found in prisma/migrations
+
+Applying migration `20261025201246_init`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20261025201246_init/
+    └─ migration.sql
+
+All migrations have been successfully applied.
+
+> prisma-7-to-8-migration-lab-app@1.0.0 seed
+> tsx src/seed.ts
+
+SEED_OK posts=3 tags=3
+TAG database id=cmvxuxbfs0001oczsudwkbhd1 idType=string
+TAG release-notes id=cmvxuxbfu0002oczshxs9410i idType=string
+TAG typescript id=cmvxuxbf50000oczs7dkrd7z0 idType=string
+SAMPLE createdAt ctor=Date isDate=true
+LABEL check
+postCount 3
+tagCount 3
+joinCount 4
+tagIds ["cmvxuxbf50000oczs7dkrd7z0","cmvxuxbfs0001oczsudwkbhd1","cmvxuxbfu0002oczshxs9410i"]
+joinPairs [["1fa371cd-80ef-4a4d-82bb-11560d7be337","cmvxuxbfs0001oczsudwkbhd1"],["1fa371cd-80ef-4a4d-82bb-11560d7be337","cmvxuxbfu0002oczshxs9410i"],["6ac425c5-6150-418a-9923-e58917f0ebfd","cmvxuxbf50000oczs7dkrd7z0"],["6ac425c5-6150-418a-9923-e58917f0ebfd","cmvxuxbfs0001oczsudwkbhd1"]]
+sha256 779594a7b5ed20a933a9818c3308f7a14d6bbee19e983915fbda57d4d406cd56
+COLUMNS
+  Post.id uuid
+  Post.title varchar
+  Post.price numeric
+  Post.metadata jsonb
+  Post.createdAt timestamp
+  Post.updatedAt timestamp
+  Tag.id text
+  Tag.label varchar
+  _PostToTag.A uuid
+  _PostToTag.B text
+  _prisma_migrations.id varchar
+  _prisma_migrations.checksum varchar
+  _prisma_migrations.finished_at timestamptz
+  _prisma_migrations.migration_name varchar
+  _prisma_migrations.logs text
+  _prisma_migrations.rolled_back_at timestamptz
+  _prisma_migrations.started_at timestamptz
+  _prisma_migrations.applied_steps_count int4

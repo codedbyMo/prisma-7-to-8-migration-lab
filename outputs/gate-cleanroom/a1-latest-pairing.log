@@ -1,0 +1,35 @@
+=== ATTEMPT a1-latest-pairing  2026-11-01T14:16:18Z ===
+pairing: prisma(CLI)=8.0.0-rc.29  @prisma/orm-postgres=8.0.0-rc.22  @prisma/orm-framework(direct)=8.0.0-rc.22
+node: v24.22.1  npm: 10.9.4
+--- npm install ---
+
+added 352 packages in 56s
+install exit: 0
+--- installed versions ---
+prisma 8.0.0-rc.29
+@prisma/orm-postgres 8.0.0-rc.22
+@prisma/orm-framework 8.0.0-rc.22
+--- npm ls @prisma/orm-framework ---
+prisma-gate-attempt@1.0.0 /home/hatch/workspace/prisma-gate-attempt
++-- @prisma/orm-framework@8.0.0-rc.22
++-- @prisma/orm-postgres@8.0.0-rc.22
+| +-- @prisma/orm-family-sql@8.0.0-rc.22
+| | `-- @prisma/orm-framework@8.0.0-rc.22 deduped
+| +-- @prisma/orm-framework@8.0.0-rc.22 deduped
+| +-- @prisma/orm-target-postgres@8.0.0-rc.22
+| | `-- @prisma/orm-framework@8.0.0-rc.22 deduped
+| `-- @prisma/orm-toolchain@8.0.0-rc.22
+|   `-- @prisma/orm-framework@8.0.0-rc.22 deduped
+`-- prisma@8.0.0-rc.29
+  `-- @prisma/orm-toolchain@8.0.0-rc.21
+    `-- @prisma/orm-framework@8.0.0-rc.21
+
+--- COMMAND: npx prisma contract emit ---
+▸ Resolving contract source...
+✘ Resolving contract source...
+✘ [CLI.UNEXPECTED] Cannot use 'in' operator to search for 'kind' in typeChoice
+  docs: https://docs.prisma.io/docs/orm/v8/reference/error-reference/CLI.UNEXPECTED
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.22, synced none). Run: prisma skills sync
+EMIT EXIT: 2
+--- generated output ---
+(no generated output)

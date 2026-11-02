@@ -1,0 +1,15 @@
+▸ Resolving contract source...
+✔ Resolving contract source...
+▸ Emitting contract...
+✔ Emitting contract...
+│  contract:  bridge/out/contract.json
+│  types:     bridge/out/contract.d.ts
+
+✔ Emitted contract.json and contract.d.ts
+
+storageHash:    943e1f5d6a56622c9b96e8216b27769a168a0dc9a8307ad14aab688c8bd2820e
+executionHash:  e376679117bb54432365155aa940ee2280e4bb34b31684dd5ee8962db30e6a30
+profileHash:    3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2
+bridge/out/contract.json
+bridge/out/contract.d.ts
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.20, synced none). Run: prisma skills sync

@@ -1,0 +1,4 @@
+cluster initialised
+waiting for server to start.... done
+server started
+/home/hatch/workspace/prisma-7-to-8-migration-lab/tools/setup-postgres.sh: 39: Syntax error: "(" unexpected

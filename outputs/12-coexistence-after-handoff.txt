@@ -1,0 +1,14 @@
+V8_POSTS_COUNT 3
+V8_POST id=2a2a6ed0-8e5e-43b3-a6d6-c8e2b8c8cd3e title="Untagged Notes" createdAtType=string createdAtCtor=String createdAt=2026-10-25 20:12:53.903
+V8_POST id=c208bc1f-e4ea-460f-8cef-47714e91c274 title="Shipping the RC by Accident" createdAtType=string createdAtCtor=String createdAt=2026-10-25 20:12:53.894
+V8_POST id=c87a694a-b6a3-43bc-a5ce-e01c829db6d8 title="Prisma 8 Is Breaking Your Schema" createdAtType=string createdAtCtor=String createdAt=2026-10-25 20:12:53.863
+V8_TAGS_COUNT 3
+V8_TAG id=cmvo9lkms0001iyzsddfe4lcz label=database
+V8_TAG id=cmvo9lkmv0002iyzsskl285to label=release-notes
+V8_TAG id=cmvo9lkku0000iyzsbxjlzaqg label=typescript
+V8_POSTTAG_COUNT 4
+V8_POSTTAG postId=c87a694a-b6a3-43bc-a5ce-e01c829db6d8 tagId=cmvo9lkku0000iyzsbxjlzaqg
+V8_POSTTAG postId=c87a694a-b6a3-43bc-a5ce-e01c829db6d8 tagId=cmvo9lkms0001iyzsddfe4lcz
+V8_POSTTAG postId=c208bc1f-e4ea-460f-8cef-47714e91c274 tagId=cmvo9lkms0001iyzsddfe4lcz
+V8_POSTTAG postId=c208bc1f-e4ea-460f-8cef-47714e91c274 tagId=cmvo9lkmv0002iyzsskl285to
+V7_POSTS_COUNT 3

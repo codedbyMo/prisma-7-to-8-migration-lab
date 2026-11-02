@@ -1,0 +1,46 @@
+=== ATTEMPT a5-devpair  2026-11-01T14:22:35Z ===
+pairing: prisma(CLI)=8.0.0-rc.29-dev.177  @prisma/orm-postgres=8.0.0-rc.22-dev.1  @prisma/orm-framework(direct)=8.0.0-rc.22-dev.1
+node: v24.22.1  npm: 10.9.4
+--- npm install ---
+
+added 351 packages in 46s
+install exit: 0
+--- installed versions ---
+prisma 8.0.0-rc.29-dev.177
+@prisma/orm-postgres 8.0.0-rc.22-dev.1
+@prisma/orm-framework 8.0.0-rc.22-dev.1
+--- npm ls @prisma/orm-framework ---
+prisma-gate-attempt@1.0.0 /home/hatch/workspace/prisma-gate-attempt
++-- @prisma/orm-framework@8.0.0-rc.22-dev.1
+`-- @prisma/orm-postgres@8.0.0-rc.22-dev.1
+  +-- @prisma/orm-family-sql@8.0.0-rc.22-dev.1
+  | `-- @prisma/orm-framework@8.0.0-rc.22-dev.1 deduped
+  +-- @prisma/orm-framework@8.0.0-rc.22-dev.1 deduped
+  +-- @prisma/orm-target-postgres@8.0.0-rc.22-dev.1
+  | `-- @prisma/orm-framework@8.0.0-rc.22-dev.1 deduped
+  `-- @prisma/orm-toolchain@8.0.0-rc.22-dev.1
+    `-- @prisma/orm-framework@8.0.0-rc.22-dev.1 deduped
+
+--- COMMAND: npx prisma contract emit ---
+▸ Resolving contract source...
+✔ Resolving contract source...
+▸ Emitting contract...
+✔ Emitting contract...
+│  contract:  generated/prisma8/contract.json
+│  types:     generated/prisma8/contract.d.ts
+
+✔ Emitted contract.json and contract.d.ts
+
+storageHash:    75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f
+executionHash:  6bb269978fc138298b895912c9dce6dd1852abbcb705b17eaf49ec62c2543061
+profileHash:    3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2
+generated/prisma8/contract.json
+generated/prisma8/contract.d.ts
+Prisma agent skills are out of date (installed @prisma/orm-postgres 8.0.0-rc.22-dev.1, synced none). Run: prisma skills sync
+EMIT EXIT: 0
+--- generated output ---
+total 48
+drwxrws--- 1 root nogroup    52 Nov  1 14:23 .
+drwxrws--- 1 root nogroup    14 Nov  1 14:23 ..
+-rw-rw---- 1 root nogroup 31221 Nov  1 14:23 contract.d.ts
+-rw-rw---- 1 root nogroup 14131 Nov  1 14:23 contract.json

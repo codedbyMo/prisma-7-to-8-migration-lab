@@ -1,0 +1,27 @@
+LABEL after-v8
+postCount 3
+tagCount 3
+joinCount 4
+tagIds ["cmvo9lkku0000iyzsbxjlzaqg","cmvo9lkms0001iyzsddfe4lcz","cmvo9lkmv0002iyzsskl285to"]
+joinPairs [["c208bc1f-e4ea-460f-8cef-47714e91c274","cmvo9lkms0001iyzsddfe4lcz"],["c208bc1f-e4ea-460f-8cef-47714e91c274","cmvo9lkmv0002iyzsskl285to"],["c87a694a-b6a3-43bc-a5ce-e01c829db6d8","cmvo9lkku0000iyzsbxjlzaqg"],["c87a694a-b6a3-43bc-a5ce-e01c829db6d8","cmvo9lkms0001iyzsddfe4lcz"]]
+sha256 a89135c1063c980958ccfdd280bbe19c2ce0cf2feca032999c638be031c10dcf
+COLUMNS
+  Post.id uuid
+  Post.title varchar
+  Post.price numeric
+  Post.metadata jsonb
+  Post.createdAt timestamp
+  Post.updatedAt timestamp
+  Post.subtitle varchar
+  Tag.id text
+  Tag.label varchar
+  _PostToTag.A uuid
+  _PostToTag.B text
+  _prisma_migrations.id varchar
+  _prisma_migrations.checksum varchar
+  _prisma_migrations.finished_at timestamptz
+  _prisma_migrations.migration_name varchar
+  _prisma_migrations.logs text
+  _prisma_migrations.rolled_back_at timestamptz
+  _prisma_migrations.started_at timestamptz
+  _prisma_migrations.applied_steps_count int4

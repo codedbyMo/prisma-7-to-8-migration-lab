@@ -1,0 +1,67 @@
+=== GATE: Prisma 7 baseline on fresh cluster, 2026-11-01T14:25:30Z ===
+--- npx prisma7 validate ---
+Loaded Prisma config from prisma7.config.ts.
+
+Prisma schema loaded from prisma/schema.prisma.
+The schema at prisma/schema.prisma is valid 🚀
+--- npx prisma7 generate ---
+Loaded Prisma config from prisma7.config.ts.
+
+Prisma schema loaded from prisma/schema.prisma.
+
+✔ Generated Prisma Client (7.10.1) to ./generated/prisma in 63ms
+
+--- npx prisma7 migrate deploy ---
+Loaded Prisma config from prisma7.config.ts.
+
+Prisma schema loaded from prisma/schema.prisma.
+Datasource "db": PostgreSQL database "lab", schema "public" at "127.0.0.1:54399"
+
+1 migration found in prisma/migrations
+
+Applying migration `20261025201246_init`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20261025201246_init/
+    └─ migration.sql
+
+All migrations have been successfully applied.
+--- npm run seed ---
+
+> prisma-7-to-8-migration-lab-app@1.0.0 seed
+> tsx src/seed.ts
+
+SEED_OK posts=3 tags=3
+TAG database id=cmvxx9y5m0001pyzskopp3mxb idType=string
+TAG release-notes id=cmvxx9y5o0002pyzslp9bfzg3 idType=string
+TAG typescript id=cmvxx9y4y0000pyzsj4t8bwht idType=string
+SAMPLE createdAt ctor=Date isDate=true
+--- integrity (before) ---
+LABEL before
+postCount 3
+tagCount 3
+joinCount 4
+tagIds ["cmvxx9y4y0000pyzsj4t8bwht","cmvxx9y5m0001pyzskopp3mxb","cmvxx9y5o0002pyzslp9bfzg3"]
+joinPairs [["580635f5-0438-4164-8dc0-b6056ce634e5","cmvxx9y5m0001pyzskopp3mxb"],["580635f5-0438-4164-8dc0-b6056ce634e5","cmvxx9y5o0002pyzslp9bfzg3"],["6824e4f4-fb3f-437a-a303-04ed5ddee2c8","cmvxx9y4y0000pyzsj4t8bwht"],["6824e4f4-fb3f-437a-a303-04ed5ddee2c8","cmvxx9y5m0001pyzskopp3mxb"]]
+sha256 2ecc7b8806e33cf64d295ad4cb5c7dfa61f4c2d255475ddca153657450c2995f
+COLUMNS
+  Post.id uuid
+  Post.title varchar
+  Post.price numeric
+  Post.metadata jsonb
+  Post.createdAt timestamp
+  Post.updatedAt timestamp
+  Tag.id text
+  Tag.label varchar
+  _PostToTag.A uuid
+  _PostToTag.B text
+  _prisma_migrations.id varchar
+  _prisma_migrations.checksum varchar
+  _prisma_migrations.finished_at timestamptz
+  _prisma_migrations.migration_name varchar
+  _prisma_migrations.logs text
+  _prisma_migrations.rolled_back_at timestamptz
+  _prisma_migrations.started_at timestamptz
+  _prisma_migrations.applied_steps_count int4

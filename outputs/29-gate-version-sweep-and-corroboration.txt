@@ -1,0 +1,49 @@
+=== GATE: version sweep + GitHub corroboration, 2026-11-01 ===
+Commands: npm view <pkg> dist-tags / versions (registry.npmjs.org), GitHub
+API search on github.com/prisma/orm, prisma.io/docs/orm/release-status.
+
+--- npm, 2026-11-01 ---
+prisma dist-tags: latest 8.0.0-rc.29, dev 8.0.0-rc.29-dev.177,
+  prev 7.10.1, next 8.0.0-rc.10. Newest dev-line builds in the versions
+  list: 8.1.0-dev.1 .. 8.1.0-dev.9. No rc.30, no GA.
+@prisma/orm-postgres dist-tags: latest 8.0.0-rc.22, dev 8.0.0-rc.22-dev.1.
+@prisma/orm-framework dist-tags: latest 8.0.0-rc.22, dev 8.0.0-rc.22-dev.1.
+@prisma/cli exists as a mirror: latest 8.0.0-rc.29, dev 8.0.0-rc.29-dev.177.
+Publish times (from lab outputs/19): prisma rc.29 2026-10-30T10:58:16Z,
+@prisma/orm-postgres rc.22 2026-10-30T13:50:21Z (about 3h after the CLI).
+
+--- prisma.io/docs/orm/release-status (read 2026-11-01) ---
+Table "latest on 30 October 2026": prisma 8.0.0-rc.29,
+@prisma/orm-postgres 8.0.0-rc.22, @prisma/orm-mongo 8.0.0-rc.22.
+Text: "Install both at latest; any two latest versions work together,
+and you do not pair the numbers yourself." GA still listed as
+"expected in October 2026"; the product is still a release candidate.
+
+--- GitHub corroboration (api.github.com/search/issues, repo prisma/orm) ---
+Search "typeChoice": exactly 1 result.
+  PR #30847 (closed, merged 2026-10-28)
+  "TML-3712: PostgreSQL gets convenience types DateTime, Date, Time and
+  Duration, and the tools write them"
+  https://github.com/prisma/orm/pull/30847
+  Its body shows the new internal representation the rc.22 library
+  produces for the DateTime constructor:
+    DateTime: { kind: 'typeChoice', args: [as, storage, precision],
+      choices: [ { when: { as: 'jsDate', storage: 'timestamptz' },
+        type: 'TimestamptzJsDate', defaults: { precision: 3 } }, ... ] }
+  So typeChoice enters the codebase with the rc.22 convenience-types
+  change, on the library side. CLI 8.0.0-rc.29 bundles
+  @prisma/orm-framework 8.0.0-rc.21 (see clean-room npm ls in
+  outputs/gate-cleanroom/a1-latest-pairing.log), which predates it.
+Search "Cannot use 'in' operator" (exact error phrase): no matching
+  issue; the only hit is unrelated (#29151, about 'password').
+  The crash itself is not a filed public issue as of 2026-11-01.
+Search "CLI.UNEXPECTED" + contract: 13 results, all unrelated older
+  work; #30682 "Prisma 8 db update bug" (CLI rc.21) is a different
+  CLI.UNEXPECTED failure ("undefined is not iterable").
+PR #30924 (open, filed 2026-10-30 by a contributor):
+  "docs: the rc.22 notes say contract infer writes the convenience
+  date types..." https://github.com/prisma/orm/pull/30924
+  Independently documents that rc.22 changed contract infer output for
+  timestamptz columns from TimestamptzString to DateTime(precision: 6)
+  without a release-note warning. Confirmed live in this gate run:
+  outputs/28 shows infer writing DateTime for a timestamptz(3) column.

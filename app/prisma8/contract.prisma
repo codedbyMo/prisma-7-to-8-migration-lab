@@ -1,0 +1,35 @@
+// use prisma-8
+// Prisma ORM 8 contract for the database Prisma ORM 7 built.
+// Derived from `prisma contract infer` output, then adjusted by hand:
+// the junction model is renamed PostTag (table and columns keep their
+// physical names via @@map/@map), and Tag.id regains the client-side
+// CUID v2 generation Prisma ORM 7 provided via @default(cuid()),
+// expressed the Prisma ORM 8 way: @onCreate(cuid(2)).
+
+model Post {
+  id        Uuid            @id(map: "Post_pkey") @default(sql`gen_random_uuid()`)
+  title     VarChar(255)
+  subtitle  VarChar(255)?
+  price     Numeric(10, 2)
+  metadata  Jsonb
+  createdAt TimestampString(3) @default(now())
+  updatedAt TimestampString(3) @onCreate(now()) @onUpdate(now())
+  postTags  PostTag[]
+}
+
+model Tag {
+  id       String    @id(map: "Tag_pkey") @onCreate(cuid(2))
+  label    VarChar(100)
+  postTags PostTag[]
+}
+
+model PostTag {
+  postId Uuid @map("A")
+  tagId  String @map("B")
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "_PostToTag_A_fkey", index: "_PostToTag_AB_pkey")
+  tag    Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "_PostToTag_B_fkey")
+
+  @@id([postId, tagId], map: "_PostToTag_AB_pkey")
+  @@index([tagId], map: "_PostToTag_B_index")
+  @@map("_PostToTag")
+}

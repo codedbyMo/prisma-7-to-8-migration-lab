@@ -1,0 +1,25 @@
+=== GATE install: dev pairing into lab app, 2026-11-01T14:25:00Z ===
+pins: prisma=8.0.0-rc.29-dev.177 @prisma/orm-postgres=8.0.0-rc.22-dev.1 @prisma/orm-framework=8.0.0-rc.22-dev.1
+
+added 1 package, removed 4 packages, and changed 8 packages in 16s
+install exit: 0
+--- installed versions ---
+prisma 8.0.0-rc.29-dev.177
+@prisma/orm-postgres 8.0.0-rc.22-dev.1
+@prisma/orm-framework 8.0.0-rc.22-dev.1
+@prisma/prisma7 7.10.1
+@prisma/client 7.10.1
+--- npm ls @prisma/orm-framework ---
+prisma-7-to-8-migration-lab-app@1.0.0 /home/hatch/workspace/prisma-7-to-8-migration-lab/app
++-- @prisma/orm-framework@8.0.0-rc.22-dev.1
+`-- @prisma/orm-postgres@8.0.0-rc.22-dev.1
+  +-- @prisma/orm-family-sql@8.0.0-rc.22-dev.1
+  | `-- @prisma/orm-framework@8.0.0-rc.22-dev.1 deduped
+  +-- @prisma/orm-framework@8.0.0-rc.22-dev.1 deduped
+  +-- @prisma/orm-target-postgres@8.0.0-rc.22-dev.1
+  | `-- @prisma/orm-framework@8.0.0-rc.22-dev.1 deduped
+  `-- @prisma/orm-toolchain@8.0.0-rc.22-dev.1
+    `-- @prisma/orm-framework@8.0.0-rc.22-dev.1 deduped
+
+--- npx prisma --version ---
+8.0.0-rc.29-dev.177

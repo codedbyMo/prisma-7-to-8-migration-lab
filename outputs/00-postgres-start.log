@@ -1,0 +1,14 @@
+initialising cluster (downloads PostgreSQL binaries on first run)...
+node:internal/fs/promises:1847
+  return await PromisePrototypeThen(
+         ^
+
+Error: EPERM: operation not permitted, chown '/home/hatch/workspace/prisma-7-to-8-migration-lab/.pgdata'
+    at async Object.chown (node:internal/fs/promises:1847:10) {
+  errno: -1,
+  code: 'EPERM',
+  syscall: 'chown',
+  path: '/home/hatch/workspace/prisma-7-to-8-migration-lab/.pgdata'
+}
+
+Node.js v24.22.1

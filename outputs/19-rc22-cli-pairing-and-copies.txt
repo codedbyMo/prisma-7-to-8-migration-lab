@@ -1,0 +1,65 @@
+# rc.22 lab rerun: CLI pairing failure and the multiple-copies refusal
+# Recorded 2026-11-01. Commands run in app/ on Node v24.22.1.
+# Raw captures: outputs/17-rc22-install.log, 17-rc22-emit-verify.txt,
+# 17-rc22-infer.txt, 18-rc22-runtime-existing-artifacts.txt.
+
+## 1. contract emit / infer / db verify fail with the current pairing
+
+After installing prisma (CLI) 8.0.0-rc.29 and @prisma/orm-postgres
+8.0.0-rc.22 (the two `latest` versions on 2026-11-01; npm registry and
+the release status page agree), every command that resolves a contract
+source fails the same way, before any database work:
+
+  [CLI.UNEXPECTED] Cannot use 'in' operator to search for 'kind' in typeChoice
+
+Reproduced on: the lab's main contract (emit, db verify),
+`prisma contract infer` against the lab database, and a two-field PSL
+test contract (psl-tests/c-oncreate-cuid2.prisma).
+
+Bisection (same machine, same day, trivial contract emit):
+  CLI rc.29 + lib rc.22  -> FAILS (above)
+  CLI rc.28 + lib rc.22  -> FAILS (same error)
+  CLI rc.29 + lib rc.21  -> emit succeeds
+  CLI rc.28 + lib rc.20  -> emit succeeds (the October pairing family)
+
+Registry publish times (npm view <pkg> time):
+  prisma 8.0.0-rc.29            2026-10-30T10:58:16Z
+  @prisma/orm-postgres rc.22    2026-10-30T13:50:21Z  (~3h after the CLI)
+  @prisma/orm-postgres rc.21    2026-10-27T20:49:53Z
+  prisma 8.0.0-rc.28            2026-10-27T19:44:48Z
+
+So on 2026-11-01 no published CLI can resolve a contract source
+against the rc.22 library in this environment: the newest CLI predates
+the library it is documented to pair with ("Install both at latest;
+any two latest versions work together", release status page, read
+2026-11-01). The CLI package also carries its own nested
+@prisma/orm-framework (rc.21 under CLI rc.29, rc.20 under CLI rc.28),
+which is the component that walks the source the rc.22 config produces.
+
+Consequence for this rerun: emit, infer, db sign and db verify under
+rc.22 could not be executed. The rc.22 date-type behaviour is therefore
+sourced in the article from the rc.22 release notes and the official
+rc.21-to-rc.22 upgrade recipe (both read directly), not from a lab
+emit. Runtime behaviour that does not need emit WAS measured (see
+outputs/18 and section 2 below).
+
+## 2. The rc.22 runtime refuses duplicate framework copies, then runs
+
+First query8 run under the rc.22 runtime stopped with:
+
+  Error [RuntimeError]: Prisma ORM is loaded from 2 copies (8.0.0-rc.22, 8.0.0-rc.22)
+  code: 'RUNTIME.MULTIPLE_ORM_COPIES'
+  copies: node_modules/@prisma/orm-family-sql/node_modules/@prisma/orm-framework (rc.22)
+          node_modules/@prisma/orm-target-postgres/node_modules/@prisma/orm-framework (rc.22)
+  fix (from the error): "Every copy is 8.0.0-rc.22, so the package manager
+  installed one version more than once. Reinstall so it keeps one copy..."
+
+npm had hoisted @prisma/orm-framework rc.21 (the CLI tree's version)
+to the top level, so each rc.22 library package nested its own rc.22
+copy. Fix applied, following the error's prescription: install
+@prisma/orm-framework@8.0.0-rc.22 as a direct dependency of the app,
+which puts the single rc.22 copy at the top level where every
+@prisma/orm-* package resolves it. The only remaining rc.21 framework
+is nested under @prisma/orm-toolchain (the CLI's own tree). After the
+fix, query8 / write8 / the bridge read all run under the rc.22 runtime
+(outputs/18), and `tsc --noEmit` passes (outputs/21).
