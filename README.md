@@ -228,3 +228,14 @@ column as a JavaScript `Date`; `TimestamptzTemporal` reads it as a
 `Temporal.Instant`; `Date` and `Time` read as strings; the
 `prisma7Schema` bridge now reads a Prisma 7 `DateTime` as a JavaScript
 `Date` (it returned strings under the rc.20 pairing).
+
+## Security note
+
+The database password used throughout this lab (`labpass`) is a
+hardcoded constant for a disposable PostgreSQL that the setup script
+creates fresh on `127.0.0.1:54399` (it binds `listen_addresses` to
+localhost explicitly) and seeds with sample blog data. It protects
+nothing outside a local lab run. If you adapt this setup for anything
+beyond a disposable local database, change the password in
+`tools/setup-postgres.sh` and `app/.env` first, and never expose the
+port publicly.
