@@ -25,6 +25,77 @@ it ran here.
 Exact pins in `app/package.json`; the lockfile `app/package-lock.json` is
 committed. Runtime: Node.js v24.22.1.
 
+## Reader rerun (portable)
+
+The whole lab replays from a fresh clone on macOS, Windows or Linux,
+as a normal user: no root, no Docker, no system PostgreSQL. The
+bootstrap starts the same embedded PostgreSQL 18.4 binaries through
+`pg_ctl`, on `127.0.0.1:54399`, with the databases `lab` and `probes`,
+and leaves the server running for the steps that follow. Current pins
+are the gate pairing in `app/package.json` (Prisma 7 `7.10.1` plus the
+Prisma 8 dev trio `prisma 8.0.0-rc.29-dev.177`,
+`@prisma/orm-postgres 8.0.0-rc.22-dev.1`,
+`@prisma/orm-framework 8.0.0-rc.22-dev.1`); see the gate rerun section
+below for why the published `latest` pairing cannot be used yet.
+
+```bash
+# 1. Disposable PostgreSQL (data in .pgdata, gitignored)
+npm --prefix tools ci
+node tools/bootstrap.mjs        # last line: POSTGRES_READY postgresql://postgres:labpass@127.0.0.1:54399/lab
+                                # safe to re-run while the server is up
+
+# 2. App dependencies and environment
+cp app/.env.example app/.env    # disposable demo credential, local only
+cd app && npm ci
+
+# 3. Prisma 7 baseline
+npx prisma7 validate
+npx prisma7 generate
+npx prisma7 migrate deploy
+npm run seed
+npx tsx src/integrity.ts before # snapshot the digest
+
+# 4. Prisma 8 side. The checked-in refs/db.json already sits at the
+#    final contract hash, so the replay rewalks the sign step. Emit
+#    the pre-subtitle contract first (the v7 database has no subtitle
+#    column yet): temporarily delete the "subtitle" line from the
+#    contract (the sed form below is the one used in the logged run),
+#    emit, sign, then restore the full contract and emit again.
+cp prisma8/contract.prisma /tmp/contract-full.bak
+sed -i '/^  subtitle /d' prisma8/contract.prisma
+npx prisma contract emit        # pre-subtitle contract, hash e2b1007
+npx prisma db sign
+mv /tmp/contract-full.bak prisma8/contract.prisma
+npx prisma contract emit        # full contract restored, hash 75e7b46
+npx prisma db migrate --advance-ref db
+npx prisma migration status     # single chain, subtitle migration applied, Up to date
+npx prisma migration plan --name reader_replay_head_check
+                                # No changes detected, and no fork warning
+npx prisma migration graph      # 2 migrations, one chain
+npx prisma db verify
+npx prisma db verify --strict   # Database marker and schema match contract
+npm run check                   # tsc --noEmit
+npx tsx src/integrity.ts after  # digest identical to the before snapshot
+
+# 5. rc.22 date probes and the prisma7Schema bridge read
+DATABASE_URL=postgresql://postgres:labpass@127.0.0.1:54399/probes node --input-type=module -e "import { Client } from 'pg'; import fs from 'node:fs'; const c = new Client({ connectionString: process.env.DATABASE_URL }); await c.connect(); await c.query(fs.readFileSync('probe3/fixture.sql', 'utf8')); await c.end(); console.log('FIXTURE_OK');"
+DATABASE_URL=postgresql://postgres:labpass@127.0.0.1:54399/probes npx prisma contract emit --config probe3/probe.config.ts
+DATABASE_URL=postgresql://postgres:labpass@127.0.0.1:54399/probes npx tsx probe3/read-probe.ts
+npx prisma contract emit --config bridge/bridge.config.ts
+npx tsx bridge/read-bridge.ts
+```
+
+What success looks like: the bootstrap prints `POSTGRES_READY`; the
+migration status shows one chain with the subtitle migration applied;
+the head plan detects no changes and prints no fork warning; verify
+and verify --strict both pass; the integrity digest after the Prisma 8
+migration is identical to the before digest; the probes print
+`happenedAt` as a `Date`, `legacyAt` as a `Temporal.Instant`, and
+`day` / `atTime` as strings. A full logged run of exactly this
+sequence, from a fresh clone, is in `outputs/30-reader-bootstrap.txt`
+and `outputs/31-reader-rerun.txt`; the migration fork it proves gone
+is documented in `outputs/32-migration-fork-resolution.txt`.
+
 ## The app
 
 `app/` starts as a plain Prisma ORM 7 project (the guide's step 1.1
@@ -35,7 +106,14 @@ and Tag with their implicit many-to-many relation. One documented
 extension: Post also carries `createdAt`/`updatedAt` DateTime fields, so
 the article's date claims could be tested instead of asserted.
 
-## PostgreSQL in this sandbox
+## PostgreSQL in this sandbox (sandbox-original, superseded for readers)
+
+This section describes the author's sandbox setup, which produced
+`outputs/00` to `outputs/29`. It is root-and-Linux-only and is kept as
+the historical record. Readers should not use it: the portable
+equivalent is `tools/bootstrap.mjs` (see "Reader rerun (portable)"
+above), and `tools/setup-postgres.sh` carries the same warning in its
+header.
 
 No Docker and no system PostgreSQL on this VM. The server is the
 PostgreSQL 18.4 binary build shipped by the `embedded-postgres` npm
@@ -143,9 +221,11 @@ with code 2 and `CLI.COMMAND_MOVED` under the Prisma 8 CLI
 
 ## Rerunning
 
+Use the portable sequence in "Reader rerun (portable)" above. Once
+the lab is up, the quick status checks are:
+
 ```bash
-sh tools/setup-postgres.sh          # disposable PostgreSQL on :54399
-cd app && npm ci                    # exact pins from the lockfile
+cd app
 npx prisma7 migrate status          # v7 side healthy
 npx tsx src/query8.ts               # the phase 3 read, both clients
 npx prisma db verify --strict       # contract vs database
@@ -228,6 +308,19 @@ column as a JavaScript `Date`; `TimestamptzTemporal` reads it as a
 `Temporal.Instant`; `Date` and `Time` read as strings; the
 `prisma7Schema` bridge now reads a Prisma 7 `DateTime` as a JavaScript
 `Date` (it returned strings under the rc.20 pairing).
+
+## Migration fork, resolved (Nov 1, 2026)
+
+The gate rerun above rewound the db origin ref to recheck the plan
+step, and its plan wrote a second migration,
+`20261101T1425_gate_recheck`, next to the identical, already applied
+`20261101T1324_add_post_subtitle`: same from and to hashes, same
+single operation. The duplicate was never applied anywhere. It has
+been removed; the checked-in history is now the single applied chain
+(`20261101T1323_baseline`, then `20261101T1324_add_post_subtitle`).
+The fresh-clone replay in `outputs/31-reader-rerun.txt` proves the
+cleaned history end to end, and
+`outputs/32-migration-fork-resolution.txt` records the details.
 
 ## Security note
 

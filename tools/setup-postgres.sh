@@ -1,4 +1,11 @@
 #!/bin/sh
+# SANDBOX-ORIGINAL SCRIPT, kept for the historical logs.
+# This is the setup that produced outputs/00-* and every later run in
+# the author's sandbox: it hard-codes /home/hatch paths, recreates a
+# system postgres user, and needs root. Readers should NOT use it;
+# the portable equivalent is tools/bootstrap.mjs (see the README
+# section "Reader rerun (portable)").
+#
 # Idempotent disposable-PostgreSQL setup for the migration lab.
 # Everything lives under /home/hatch (persists across VM replacements);
 # the postgres system user is recreated when missing (its /etc/passwd

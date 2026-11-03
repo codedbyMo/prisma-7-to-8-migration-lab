@@ -1,0 +1,93 @@
+=== READER REPLAY: portable bootstrap (tools install, bootstrap, app install) ===
+environment: fresh clone at /home/postgres/reader-clone
+user: postgres (uid 1000)
+date: 2026-11-02T04:01:53Z
+node: v24.22.1, npm: 10.9.4
+clone HEAD: 5aef0c2 README: portable reader rerun, fork resolution, sandbox setup marked superseded
+platform: Linux 7.0.0-39-generic x86_64
+
+--- npm --prefix tools ci ---
+
+added 17 packages in 2s
+exit: 0
+
+--- node tools/bootstrap.mjs ---
+initialising disposable PostgreSQL cluster in .pgdata ...
+cluster initialised
+server started on 127.0.0.1:54399 (log: /tmp/prisma-7-to-8-lab/postgres.log)
+database 'lab' created
+database 'probes' created
+POSTGRES_READY postgresql://postgres:labpass@127.0.0.1:54399/lab
+exit: 0
+
+--- node tools/bootstrap.mjs  (idempotency re-run while the server is up) ---
+cluster already initialised (.pgdata exists)
+server already running on 127.0.0.1:54399
+database 'lab' already exists
+database 'probes' already exists
+POSTGRES_READY postgresql://postgres:labpass@127.0.0.1:54399/lab
+exit: 0
+
+--- cp app/.env.example app/.env ---
+exit: 0
+
+--- cd app && npm ci ---
+npm error code 1
+npm error path /home/postgres/reader-clone/app/node_modules/@prisma/engines
+npm error command failed
+npm error command sh -c node scripts/postinstall.js
+npm error node:internal/process/promises:394
+npm error     triggerUncaughtException(err, true /* fromPromise */);
+npm error     ^
+npm error
+npm error Error: aborted
+npm error     at TLSSocket.socketCloseListener (node:_http_client:734:19)
+npm error     at TLSSocket.emit (node:events:526:24)
+npm error     at node:net:362:12
+npm error     at Socket.done (node:internal/tls/wrap:780:7)
+npm error     at Socket.wrapper (node:events:639:12)
+npm error     at Socket.emit (node:events:526:24)
+npm error     at TCP.<anonymous> (node:net:362:12) {
+npm error   code: 'ECONNRESET',
+npm error   attemptNumber: 1,
+npm error   retriesLeft: 2
+npm error }
+npm error
+npm error Node.js v24.22.1
+npm error A complete log of this run can be found in: /home/postgres/.npm/_logs/2026-11-02T04_01_56_533Z-debug-0.log
+exit: 1
+
+--- SANDBOX REMEDIATION (not a reader step) ---
+This sandbox's egress proxy resets the @prisma/engines postinstall
+download (ECONNRESET above), the same failure recorded in
+outputs/01-engines-postinstall-debug.log. The lab's documented
+workaround is applied: install without scripts, fetch the schema
+engine with curl, verify it against the official .sha256, place
+it, and run the engines postinstall manually. On a normal network
+plain npm ci above succeeds and none of this is needed.
+
+--- npm ci --ignore-scripts ---
+
+added 497 packages in 1m
+
+80 packages are looking for funding
+  run `npm fund` for details
+exit: 0
+
+--- curl -sSL -o /tmp/schema-engine.gz https://binaries.prisma.sh/all_commits/d1b3f377ca835d73fd50954a5e22128b9ebdd6b8/debian-openssl-3.0.x/schema-engine.gz ---
+exit: 0
+
+--- curl -sSL -o /tmp/schema-engine.gz.sha256 https://binaries.prisma.sh/all_commits/d1b3f377ca835d73fd50954a5e22128b9ebdd6b8/debian-openssl-3.0.x/schema-engine.gz.sha256 && sha256sum /tmp/schema-engine.gz ---
+5827f56149193f0249b2f4b8a64e60c300c3129ed6514bad0a11c340e1cffad6  ./debian-openssl-3.0.x/schema-engine.gz
+5827f56149193f0249b2f4b8a64e60c300c3129ed6514bad0a11c340e1cffad6  /tmp/schema-engine.gz
+exit: 0
+
+--- gunzip -c /tmp/schema-engine.gz > node_modules/@prisma/engines/schema-engine-debian-openssl-3.0.x && chmod +x node_modules/@prisma/engines/schema-engine-debian-openssl-3.0.x ---
+exit: 0
+
+--- cd node_modules/@prisma/engines && node scripts/postinstall.js ---
+exit: 0
+
+--- npx prisma --version ---
+8.0.0-rc.29-dev.177
+exit: 0

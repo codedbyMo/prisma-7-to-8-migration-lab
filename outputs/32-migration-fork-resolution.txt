@@ -1,0 +1,70 @@
+MIGRATION FORK, RESOLVED
+Prisma 7 to 8 migration lab, app/migrations/app/
+Date: 2026-11-02 UTC (Nov 1, 2026, America/Toronto)
+Context: review blocker on blog post #20 v5. The checked-in migration
+history contained a fork; this note records what it was, why removing
+it is safe, and the replay that proves the cleaned history.
+
+WHAT THE FORK WAS
+Two migration directories described the same contract step, from
+contract hash e2b10078c8f762c7544b5ee625263cb0a291e127e8a70f90b78af01582d9d2d6
+to 75e7b46ee20377378c1b6d2f13bb90395d0c758153579b3c04fe25a565b5c38f,
+with the identical single operation (Add column "subtitle" to "Post",
+one ALTER TABLE):
+
+  20261101T1324_add_post_subtitle   (planned 13:24 UTC, Nov 1, 2026)
+  20261101T1425_gate_recheck        (planned 14:25 UTC, Nov 1, 2026)
+
+The second is a duplicate plan of the first. It was created by the
+Nov 1, 2026 validation-gate rerun (outputs/25-gate-emit-plan-migrate-verify.txt):
+to recheck the gate end to end, the run rewound the db origin ref to
+e2b1007 and planned the subtitle change again. The CLI warned that the
+origin already had a migration leading to 75e7b46 and that planning
+from it forks the migration graph, and then wrote the plan as a new
+directory, 20261101T1425_gate_recheck, next to the existing one. The
+gate's migrate step applied the original 20261101T1324 migration; the
+gate_recheck duplicate was never applied to any database. It only sat
+in the directory as an unapplied sibling branch.
+
+WHY REMOVING THE DUPLICATE IS SAFE
+- Identical effect: same from hash, same to hash, same single
+  operation, byte-equivalent DDL. Nothing the duplicate describes is
+  lost; the applied migration (20261101T1324_add_post_subtitle) says
+  exactly the same thing and stays.
+- Never applied: no database carries a marker or a migration record
+  for 20261101T1425_gate_recheck, so no database state depends on the
+  directory existing.
+- The signed head is unchanged: refs/db.json still points at
+  75e7b46, reached by the single chain baseline (20261101T1323,
+  empty to e2b1007) then add_post_subtitle (e2b1007 to 75e7b46).
+
+WHAT WAS DONE
+The directory app/migrations/app/20261101T1425_gate_recheck/
+(migration.json, migration.ts, ops.json) was removed with git rm.
+No historical output was rewritten or deleted: outputs/00 to 29 stay
+as the record, including outputs/25, which shows the fork being
+created.
+
+PROOF: THE FRESH REPLAY
+A fresh clone of the cleaned repository was replayed end to end
+(outputs/30-reader-bootstrap.txt and outputs/31-reader-rerun.txt):
+portable bootstrap, Prisma 7 migrate and seed, integrity snapshot,
+Prisma 8 emit, sign, migrate, status, verify, and the date probes.
+In that replay:
+- prisma migration graph shows a single chain of 2 migrations
+  (baseline, then add_post_subtitle), 1 space, no branch.
+- prisma migration status shows 20261101T1324_add_post_subtitle as
+  applied and reports the database Up to date, with no unapplied
+  branch.
+- prisma migration plan at the replayed head reports No changes
+  detected and prints no fork warning.
+- prisma db verify and prisma db verify --strict both pass
+  (Database marker and schema match contract).
+- The integrity digest after the Prisma 8 migration is identical to
+  the digest taken on the Prisma 7 baseline before it (the values are
+  recorded in outputs/31-reader-rerun.txt).
+
+CONCLUSION
+The checked-in history is the single applied chain and nothing else:
+20261101T1323_baseline, then 20261101T1324_add_post_subtitle. The
+fork is resolved.
