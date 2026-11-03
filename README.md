@@ -6,7 +6,12 @@ blog post #20 ("Prisma 8 Is Breaking Your Schema: A Migration Guide")
 before publication. Nothing in the post is presented as runnable unless
 it ran here.
 
-## Pinned versions (npm registry, October 25, 2026)
+## Pinned versions (npm registry, October 25, 2026) — historical
+
+This table records the first sandbox run's pins (the `latest`
+pairing of its day). It is kept as history, not as install advice:
+the current reader pins are the gate pairing named in the rerun
+section below.
 
 | Package | Version | Role |
 | --- | --- | --- |
@@ -41,11 +46,12 @@ below for why the published `latest` pairing cannot be used yet.
 ```bash
 # 1. Disposable PostgreSQL (data in .pgdata, gitignored)
 npm --prefix tools ci
-node tools/bootstrap.mjs        # last line: POSTGRES_READY postgresql://postgres:labpass@127.0.0.1:54399/lab
+node tools/bootstrap.mjs        # generates random per-cluster credentials,
+                                # writes app/.env, last line: POSTGRES_READY
                                 # safe to re-run while the server is up
 
-# 2. App dependencies and environment
-cp app/.env.example app/.env    # disposable demo credential, local only
+# 2. App dependencies (environment already written to app/.env by
+#    the bootstrap; app/.env.example only documents its shape)
 cd app && npm ci
 
 # 3. Prisma 7 baseline
@@ -58,14 +64,14 @@ npx tsx src/integrity.ts before # snapshot the digest
 # 4. Prisma 8 side. The checked-in refs/db.json already sits at the
 #    final contract hash, so the replay rewalks the sign step. Emit
 #    the pre-subtitle contract first (the v7 database has no subtitle
-#    column yet): temporarily delete the "subtitle" line from the
-#    contract (the sed form below is the one used in the logged run),
-#    emit, sign, then restore the full contract and emit again.
-cp prisma8/contract.prisma /tmp/contract-full.bak
-sed -i '/^  subtitle /d' prisma8/contract.prisma
+#    column yet): strip the "subtitle" line from the contract with
+#    the portable Node helper (it backs the original up beside the
+#    contract and refuses to run twice), emit, sign, then restore
+#    the full contract and emit again.
+node ../tools/contract-variant.mjs strip
 npx prisma contract emit        # pre-subtitle contract, hash e2b1007
 npx prisma db sign
-mv /tmp/contract-full.bak prisma8/contract.prisma
+node ../tools/contract-variant.mjs restore
 npx prisma contract emit        # full contract restored, hash 75e7b46
 npx prisma db migrate --advance-ref db
 npx prisma migration status     # single chain, subtitle migration applied, Up to date
@@ -77,10 +83,12 @@ npx prisma db verify --strict   # Database marker and schema match contract
 npm run check                   # tsc --noEmit
 npx tsx src/integrity.ts after  # digest identical to the before snapshot
 
-# 5. rc.22 date probes and the prisma7Schema bridge read
-DATABASE_URL=postgresql://postgres:labpass@127.0.0.1:54399/probes node --input-type=module -e "import { Client } from 'pg'; import fs from 'node:fs'; const c = new Client({ connectionString: process.env.DATABASE_URL }); await c.connect(); await c.query(fs.readFileSync('probe3/fixture.sql', 'utf8')); await c.end(); console.log('FIXTURE_OK');"
-DATABASE_URL=postgresql://postgres:labpass@127.0.0.1:54399/probes npx prisma contract emit --config probe3/probe.config.ts
-DATABASE_URL=postgresql://postgres:labpass@127.0.0.1:54399/probes npx tsx probe3/read-probe.ts
+# 5. rc.22 date probes and the prisma7Schema bridge read. No URLs on
+#    any command line: the probe steps read PROBES_DATABASE_URL from
+#    app/.env, the bridge steps read DATABASE_URL from the same file.
+node probe3/load-fixture.mjs    # prints FIXTURE_OK
+npx prisma contract emit --config probe3/probe.config.ts
+npx tsx probe3/read-probe.ts
 npx prisma contract emit --config bridge/bridge.config.ts
 npx tsx bridge/read-bridge.ts
 ```
@@ -92,9 +100,15 @@ and verify --strict both pass; the integrity digest after the Prisma 8
 migration is identical to the before digest; the probes print
 `happenedAt` as a `Date`, `legacyAt` as a `Temporal.Instant`, and
 `day` / `atTime` as strings. A full logged run of exactly this
-sequence, from a fresh clone, is in `outputs/30-reader-bootstrap.txt`
-and `outputs/31-reader-rerun.txt`; the migration fork it proves gone
-is documented in `outputs/32-migration-fork-resolution.txt`.
+sequence, from a fresh clone and under the current credential model
+(random per-cluster passwords, non-superuser app role, the portable
+contract-variant helper), is in `outputs/33-bootstrap-v7.txt` and
+`outputs/34-replay-v7.txt`; the previous run's logs are
+`outputs/30-reader-bootstrap.txt` and `outputs/31-reader-rerun.txt`,
+and the migration fork the sequence proves gone is documented in
+`outputs/32-migration-fork-resolution.txt`. Secret-scan and
+dependency-audit evidence for the current tree is in
+`outputs/35-secret-scan-and-audit.txt`.
 
 ## The app
 
@@ -324,11 +338,26 @@ cleaned history end to end, and
 
 ## Security note
 
-The database password used throughout this lab (`labpass`) is a
-hardcoded constant for a disposable PostgreSQL that the setup script
-creates fresh on `127.0.0.1:54399` (it binds `listen_addresses` to
-localhost explicitly) and seeds with sample blog data. It protects
-nothing outside a local lab run. If you adapt this setup for anything
-beyond a disposable local database, change the password in
-`tools/setup-postgres.sh` and `app/.env` first, and never expose the
-port publicly.
+There is no published password in this lab anymore. Earlier versions
+used a hardcoded demo constant (`labpass`) for the disposable
+database; that constant survives only in historical logs and
+commits, and it no longer opens anything: clusters are never
+created with it now, and any database it ever protected was a
+throwaway local one seeded with sample blog data. (If a real system
+ever reused that string as an actual password, rotate it there;
+deleting history would not help and is not attempted.)
+
+Since Nov 2026, `tools/bootstrap.mjs` generates two random
+passwords per cluster on first run: one for the `postgres`
+superuser, which only the bootstrap itself uses (to create the app
+role and the databases), and one for the app role `lab_app`, a
+NOSUPERUSER login that owns the `lab` and `probes` databases and is
+the only role the reader sequence connects as. Both passwords live
+in `tools/.lab-credentials.json` (gitignored, file mode 0600); the
+app role's URLs are written to `app/.env` (also gitignored, mode
+0600). No password is printed to the console or written into any
+tracked file, and the server binds `listen_addresses` to
+`127.0.0.1` explicitly. This is still a disposable local lab: do
+not expose the port publicly, and do not adapt the setup for
+anything beyond a local database without replacing the credential
+model wholesale.

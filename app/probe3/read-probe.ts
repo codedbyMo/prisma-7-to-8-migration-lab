@@ -5,7 +5,10 @@ import { contractFromJson } from "@prisma/orm-postgres/static";
 import contractJson from "./out/contract.json" with { type: "json" };
 
 const contract = contractFromJson(contractJson as never);
-const db = postgres({ url: process.env.DATABASE_URL!, contract });
+const db = postgres({
+  url: (process.env.PROBES_DATABASE_URL ?? process.env.DATABASE_URL)!,
+  contract,
+});
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const rows = await (db.orm as any).public.ProbeEvent.all();
 const e = rows[0];

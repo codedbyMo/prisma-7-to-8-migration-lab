@@ -11,6 +11,16 @@
 # the postgres system user is recreated when missing (its /etc/passwd
 # entry does not persist). Server: PostgreSQL 18.4 (zonkyio binaries via
 # the embedded-postgres npm package), port 54399, database "lab".
+#
+# REFUSAL GUARD (added Nov 2026): this file is kept as the historical
+# record of the sandbox setup. It no longer runs. Among other things
+# it wrote a password file to a shared temp path before restricting
+# its permissions; that is one of the reasons it was retired. The
+# supported entry point is the portable bootstrap:
+#   node tools/bootstrap.mjs
+echo "setup-postgres.sh is the retired sandbox setup and refuses to run." >&2
+echo "Readers: use the portable bootstrap instead: node tools/bootstrap.mjs" >&2
+exit 1
 set -e
 # NOTE: the runtime overlay over /home/hatch refuses chown to another uid,
 # so the live cluster lives in /home/postgres (ephemeral across VM
@@ -30,7 +40,7 @@ chown -R postgres:postgres "$PGHOME"
 chmod 755 "$PGHOME"
 
 if [ ! -s "$PGHOME/pgdata/PG_VERSION" ]; then
-  echo "labpass" > /tmp/pgpw.txt
+  echo "RETIRED-DEMO-CONSTANT" > /tmp/pgpw.txt
   chown postgres:postgres /tmp/pgpw.txt && chmod 600 /tmp/pgpw.txt
   su postgres -s /bin/sh -c "$PGHOME/pg-native/bin/initdb -D $PGHOME/pgdata -U postgres --auth=password --pwfile=/tmp/pgpw.txt -E UTF8" >/dev/null
   echo "cluster initialised"
@@ -46,7 +56,7 @@ fi
 node -e "
 import('/home/hatch/workspace/prisma-7-to-8-migration-lab/tools/node_modules/pg/lib/index.js').then(async (pg) => {
   const Client = pg.default.Client;
-  const admin = new Client({host:'127.0.0.1', port:54399, user:'postgres', password:'labpass', database:'postgres'});
+  const admin = new Client({host:'127.0.0.1', port:54399, user:'postgres', password:'', database:'postgres'});
   await admin.connect();
   const r = await admin.query(\"select 1 from pg_database where datname='lab'\");
   if (r.rowCount === 0) { await admin.query('CREATE DATABASE lab'); console.log('database lab created'); }
@@ -54,4 +64,4 @@ import('/home/hatch/workspace/prisma-7-to-8-migration-lab/tools/node_modules/pg/
   await admin.end();
 }).catch(e => { console.error('DB_SETUP_FAIL', e.message); process.exit(1); });
 "
-echo "POSTGRES_READY postgresql://postgres:labpass@127.0.0.1:54399/lab"
+echo "POSTGRES_READY (connection URL removed when this script was retired)"

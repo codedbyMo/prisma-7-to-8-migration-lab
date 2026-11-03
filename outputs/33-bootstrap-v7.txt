@@ -1,0 +1,24 @@
+=== outputs/33: bootstrap, v7 credential model (Nov 3 2026; replayed as non-root user labrun from ~/lab20-replay) ===
+
+added 17 packages in 1s
+--- bootstrap, first run (fresh cluster) ---
+initialising disposable PostgreSQL cluster in .pgdata ...
+cluster initialised
+server started on 127.0.0.1:54399 (log: /tmp/prisma-7-to-8-lab/postgres.log)
+app role 'lab_app' created (NOSUPERUSER)
+database 'lab' created (owner: lab_app)
+database 'probes' created (owner: lab_app)
+app/.env written (DATABASE_URL + PROBES_DATABASE_URL, role lab_app)
+POSTGRES_READY databases lab, probes on 127.0.0.1:54399 (app role lab_app; credentials in app/.env)
+bootstrap exit: 0
+--- bootstrap, idempotency re-run while the server is up ---
+cluster already initialised (.pgdata exists)
+server already running on 127.0.0.1:54399
+app role 'lab_app' already exists (password reconciled)
+database 'lab' already exists (owner set to lab_app)
+database 'probes' already exists (owner set to lab_app)
+app/.env written (DATABASE_URL + PROBES_DATABASE_URL, role lab_app)
+POSTGRES_READY databases lab, probes on 127.0.0.1:54399 (app role lab_app; credentials in app/.env)
+bootstrap re-run exit: 0
+-rw------- app/.env
+-rw------- tools/.lab-credentials.json

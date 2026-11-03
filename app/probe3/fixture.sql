@@ -7,10 +7,11 @@
 -- timestamptz(3), read back as DateTime before the hand edit that
 -- turned legacyAt into TimestamptzTemporal.
 --
--- Apply with any PostgreSQL client connected to the probes database,
--- for example from app/ once dependencies are installed:
---   DATABASE_URL=postgresql://postgres:labpass@127.0.0.1:54399/probes \
---     node --input-type=module -e "import { Client } from 'pg'; import fs from 'node:fs'; const c = new Client({ connectionString: process.env.DATABASE_URL }); await c.connect(); await c.query(fs.readFileSync('probe3/fixture.sql', 'utf8')); await c.end(); console.log('FIXTURE_OK');"
+-- Apply with any PostgreSQL client connected to the probes database.
+-- The lab's loader does exactly that, reading PROBES_DATABASE_URL
+-- from app/.env (written by tools/bootstrap.mjs): from app/, run
+--   node probe3/load-fixture.mjs
+-- which prints FIXTURE_OK on success.
 CREATE TABLE IF NOT EXISTS "ProbeEvent" (
   "id" integer NOT NULL,
   "happenedAt" timestamptz(3),

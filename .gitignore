@@ -2,3 +2,5 @@ node_modules/
 .pgdata/
 .pg-server.json
 app/.env
+tools/.lab-credentials.json
+app/prisma8/.contract-full.bak

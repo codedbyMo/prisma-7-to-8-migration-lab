@@ -4,6 +4,18 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+// RETIRED (Nov 2026): this was the author's sandbox launcher, kept
+// for the historical record. It refuses to run. It predates the
+// credential model of the reader bootstrap (it carried the old
+// published demo password) and manages the server through the
+// EmbeddedPostgres class instead of pg_ctl. The supported entry
+// point is tools/bootstrap.mjs.
+console.error(
+  "start-postgres.mjs is the retired sandbox launcher and refuses to run.\n" +
+    "Readers: use the portable bootstrap instead: node tools/bootstrap.mjs",
+);
+process.exit(1);
+
 const here = path.dirname(fileURLToPath(import.meta.url));
 const labRoot = path.resolve(here, "..");
 const dataDir = path.join(labRoot, ".pgdata");
@@ -13,7 +25,7 @@ const PORT = 54399;
 const pg = new EmbeddedPostgres({
   databaseDir: dataDir,
   user: "postgres",
-  password: "labpass",
+  password: "",
   port: PORT,
   persistent: true,
   createPostgresUser: true,
@@ -38,7 +50,7 @@ const client = new Client({
   host: "127.0.0.1",
   port: PORT,
   user: "postgres",
-  password: "labpass",
+  password: "",
   database: "lab",
 });
 await client.connect();
